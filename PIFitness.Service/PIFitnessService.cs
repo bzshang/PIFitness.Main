@@ -40,24 +40,6 @@ namespace PIFitness.Service
             PIFitnessLog.ConfigureLogging();
             PIFitnessLog.Write(TraceEventType.Information, 0, "PI Fitness Service is starting");
 
-
-            //GPXRepository gpxRepository = new GPXRepository();
-            //IPIFitnessTableFilter<GPXEntry> filter = new GPXTableFilter();
-            //IPIFitnessTableReader<GPXEntry> fitnessReader = new GPXDbReader(gpxRepository, filter);
-
-            //AFDatabase database = new PISystems()["BSHANGE6430s"].Databases["PIFitness"];
-            //PIFitnessLog.Write(TraceEventType.Information, 0, "Connected to AF database");
-
-            //AFElementLookup elementLookup = new AFElementLookup(database);
-            //IPIFitnessRowProcessor<GPXEntry> rowProcessor = new GPXRowProcessor(elementLookup);
-
-            //IPIFitnessValueWriter valueWriter = new PIFitnessValueWriter();
-            //IPIFitnessProcessor fitnessProcessor = new GPXProcessor(fitnessReader, rowProcessor, valueWriter);
-
-            //IList<IPIFitnessProcessor> processorList = new List<IPIFitnessProcessor>();
-            //processorList.Add(fitnessProcessor);
-            //_serviceWorker = new ServiceWorker(processorList);
-
             IKernel kernel = new StandardKernel(new GpxModule(), new DomainModule());
             
             IPIFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();
