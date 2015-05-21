@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Service", "PIFitness.Service\PIFitness.Service.csproj", "{675E181B-3E28-4D15-BA57-2C8AD6A4AC27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Log", "PIFitness.Log\PIFitness.Log.csproj", "{61A88C21-A03B-4C5D-8AA0-2F4D59703EC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Factories", "PIFitness.Factories\PIFitness.Factories.csproj", "{AE5FFF8C-292B-4E80-BC60-C453245BAE44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Domain", "PIFitness.Domain\PIFitness.Domain.csproj", "{8311AB75-6203-4BB7-A3D1-CEF092285323}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.GPX", "PIFitness.GPX\PIFitness.GPX.csproj", "{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{675E181B-3E28-4D15-BA57-2C8AD6A4AC27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675E181B-3E28-4D15-BA57-2C8AD6A4AC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675E181B-3E28-4D15-BA57-2C8AD6A4AC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675E181B-3E28-4D15-BA57-2C8AD6A4AC27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A88C21-A03B-4C5D-8AA0-2F4D59703EC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A88C21-A03B-4C5D-8AA0-2F4D59703EC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A88C21-A03B-4C5D-8AA0-2F4D59703EC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A88C21-A03B-4C5D-8AA0-2F4D59703EC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5FFF8C-292B-4E80-BC60-C453245BAE44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5FFF8C-292B-4E80-BC60-C453245BAE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5FFF8C-292B-4E80-BC60-C453245BAE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5FFF8C-292B-4E80-BC60-C453245BAE44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8311AB75-6203-4BB7-A3D1-CEF092285323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8311AB75-6203-4BB7-A3D1-CEF092285323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8311AB75-6203-4BB7-A3D1-CEF092285323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8311AB75-6203-4BB7-A3D1-CEF092285323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
