@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
+using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.Time;
 
@@ -44,7 +45,9 @@ namespace PIFitness.GPX
                 return;
             }
 
-            foreach (var row in table)
+            //_db.Refresh();
+            Parallel.ForEach<GPXEntry>(table, new ParallelOptions { MaxDegreeOfParallelism = 4 }, row =>
+            //foreach (var row in table)
             {
                 try
                 {
@@ -59,7 +62,9 @@ namespace PIFitness.GPX
                 {
                     PIFitnessLog.Write(TraceEventType.Information, 0, ex);
                 }
-            }
+            });
+            //_db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisSession);
+            
 
         }
 

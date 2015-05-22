@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 using Ninject;
 
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 
+using PIFitness.Log;
 using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.Domain
@@ -52,6 +54,7 @@ namespace PIFitness.Domain
                 AFDataReference.CreateConfig(gpxElement, false, null);
 
                 _db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisSession);
+                PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Created AF element for user {0}", userName));
             }
         }
 

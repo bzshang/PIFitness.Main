@@ -13,6 +13,8 @@ namespace PIFitness.Domain
     {
         private AFDatabase _db;
 
+        private object _lockObject = new object();
+
         public AFElementLookup(AFDatabase db)
         {
             _db = db;
@@ -20,7 +22,12 @@ namespace PIFitness.Domain
 
         public AFElement GetElementFromGuid(string id)
         {
-            return _db.Elements.DefaultIfEmpty(null).FirstOrDefault(i => i.Attributes["Guid"].GetValue().ToString() == id);
+            AFElement element = null;
+            lock (_lockObject)
+            {
+                element = _db.Elements.DefaultIfEmpty(null).FirstOrDefault(i => i.Attributes["Guid"].GetValue().ToString() == id);
+            }
+            return element;
         }
 
 

@@ -39,7 +39,6 @@ namespace PIFitness.AFSync
                     string userName = row.UserName;
                     string id = row.Id;
                     _elementWriter.CreateUserElementTree(userName, id);
-                    PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Created AF element for user {0}", userName));
                 }
                 catch (Exception ex)
                 {

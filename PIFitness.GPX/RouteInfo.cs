@@ -17,5 +17,6 @@ namespace PIFitness.GPX
         public string ActivityName { get; set; }
         public AFTime StartTime { get; set; }
         public AFTime EndTime { get; set; }
+        public string UniqueName { get; set; }
     }
 }

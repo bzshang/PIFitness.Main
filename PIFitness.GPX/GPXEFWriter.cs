@@ -31,11 +31,12 @@ namespace PIFitness.GPX
         public void CreateEventFrame(RouteInfo routeInfo)
         {
             AFElement element = routeInfo.Element;
-            string name = routeInfo.ActivityName;
+            string name = routeInfo.UniqueName;
             AFTime start = routeInfo.StartTime;
             AFTime end = routeInfo.EndTime;
 
-            AFNamedCollectionList<AFEventFrame> listEF = AFEventFrame.FindEventFrames(element.Database, null, name, AFSearchField.Name, true, AFSortField.StartTime, AFSortOrder.Ascending, 0, 1);
+            AFNamedCollectionList<AFEventFrame> listEF = element.GetEventFrames(new AFTime("*"), 0, 1, AFEventFrameSearchMode.BackwardFromStartTime, name, null, _efTemplate);
+            //AFNamedCollectionList <AFEventFrame> listEF = AFEventFrame.FindEventFrames(element.Database, null, name, AFSearchField.Name, true, AFSortField.StartTime, AFSortOrder.Ascending, 0, 1);
 
             if (listEF.Count > 0)
             {
@@ -49,7 +50,7 @@ namespace PIFitness.GPX
             newEF.PrimaryReferencedElement = element.Elements["GPX"];
             newEF.CheckIn();
 
-            _db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisSession);
+            _db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisThread);
             _db.Refresh();
         }
 

@@ -234,6 +234,7 @@ namespace PIFitness.GPX
                 return new RouteInfo { Element = element,
                                        Values = listAFValues,
                                        ActivityName = activityName,
+                                       UniqueName = efName,
                                        UserName = element.Name,
                                        StartTime = start,
                                        EndTime = end };
