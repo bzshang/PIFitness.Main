@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
+using Ninject;
+
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.EventFrame;
@@ -20,7 +22,7 @@ namespace PIFitness.GPX
         private AFDatabase _db;
         private AFElementTemplate _efTemplate;
 
-        public GPXEFWriter(AFDatabase db, AFElementTemplate efTemplate)
+        public GPXEFWriter(AFDatabase db, [Named("GpxEventFrame")] AFElementTemplate efTemplate)
         {
             _db = db;
             _efTemplate = efTemplate;

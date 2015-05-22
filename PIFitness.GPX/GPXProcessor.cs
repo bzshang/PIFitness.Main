@@ -16,16 +16,16 @@ namespace PIFitness.GPX
 {
     public class GPXProcessor : IPIFitnessProcessor
     {
-        private IGPXTableReader<GPXEntry> _reader;
+        private IPIFitnessTableReader<GPXEntry> _reader;
 
-        private IGPXRowProcessor<GPXEntry> _rowProcessor;
+        private IGPXRowProcessor _rowProcessor;
 
         private IPIFitnessValueWriter _valueWriter;
 
         private IGPXEFWriter _efWriter;
 
-        public GPXProcessor(IGPXTableReader<GPXEntry> reader, 
-            IGPXRowProcessor<GPXEntry> rowProcessor,
+        public GPXProcessor(IPIFitnessTableReader<GPXEntry> reader, 
+            IGPXRowProcessor rowProcessor,
             IPIFitnessValueWriter valueWriter,
             IGPXEFWriter efWriter)
         {

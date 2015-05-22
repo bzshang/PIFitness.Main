@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using PIFitness.GPX.Interfaces;
+using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.GPX
 {
-    public class GPXTableFilter : IGPXTableFilter<GPXEntry>
+    public class GPXTableFilter : IPIFitnessTableFilter<GPXEntry>
     {
 
         public IQueryable<GPXEntry> FilterTable(IQueryable<GPXEntry> table)

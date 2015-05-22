@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 
 using PIFitness.Log;
-using PIFitness.Domain;
+using PIFitness.AFSync;
 using PIFitness.Domain.Interfaces;
 using PIFitness.GPX;
 using PIFitness.Factories.Modules;
@@ -40,9 +40,10 @@ namespace PIFitness.Service
             PIFitnessLog.ConfigureLogging();
             PIFitnessLog.Write(TraceEventType.Information, 0, "PI Fitness Service is starting");
 
-            IKernel kernel = new StandardKernel(new GpxModule(), new DomainModule());
-            
-            IPIFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();
+            IKernel kernel = new StandardKernel(new AFSyncModule(), new GpxModule(), new DomainModule());
+
+            //IPIFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();
+            IPIFitnessProcessor gpxProcessor = kernel.Get<AFSyncProcessor>();
 
             _serviceWorker = kernel.Get<ServiceWorker>();
             _serviceWorker.AddProcessor(gpxProcessor);

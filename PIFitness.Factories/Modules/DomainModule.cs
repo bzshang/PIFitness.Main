@@ -29,12 +29,21 @@ namespace PIFitness.Factories.Modules
 
         public override void Load()
         {
-            Bind<IPIFitnessValueWriter>().To<PIFitnessValueWriter>();
-            Bind<IList<IPIFitnessProcessor>>().To<List<IPIFitnessProcessor>>();
-            Bind<AFElementLookup>().ToSelf().InSingletonScope();//.WithConstructorArgument("db", _db);
+            Bind<IPIFitnessValueWriter>().To<PIFitnessValueWriter>().InSingletonScope(); 
+            Bind<IPIFitnessElementWriter>().To<PIFitnessElementWriter>().InSingletonScope();
+
+            Bind<AFElementLookup>().ToSelf().InSingletonScope();
+
             Bind<AFDatabase>().ToMethod(context => AFFactory.GetAFDatabase()).InSingletonScope();
+
             Bind<AFElementTemplate>().ToMethod(context => 
-                AFFactory.GetGPXEventFrameTemplate(context.Kernel.Get<AFDatabase>())).InSingletonScope();
+                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(),TemplateType.UserElement)).InSingletonScope().Named("UserElement");
+            Bind<AFElementTemplate>().ToMethod(context =>
+                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.FitbitElement)).InSingletonScope().Named("FitbitElement");
+            Bind<AFElementTemplate>().ToMethod(context =>
+                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXElement)).InSingletonScope().Named("GpxElement");
+            Bind<AFElementTemplate>().ToMethod(context =>
+                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXEventFrame)).InSingletonScope().Named("GpxEventFrame");
         }
 
 

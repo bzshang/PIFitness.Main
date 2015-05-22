@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace PIFitness.GPX.Interfaces
+namespace PIFitness.Domain.Interfaces
 {
-    public interface IGPXTableFilter<T>
+    public interface IPIFitnessTableFilter<T>
     {
         IQueryable<T> FilterTable(IQueryable<T> table);
 

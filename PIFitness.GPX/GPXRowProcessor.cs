@@ -16,7 +16,7 @@ using PIFitness.GPX.Interfaces;
 
 namespace PIFitness.GPX
 {
-    public class GPXRowProcessor : IGPXRowProcessor<GPXEntry>
+    public class GPXRowProcessor : IGPXRowProcessor
     {
 
         private AFElementLookup _lookup;

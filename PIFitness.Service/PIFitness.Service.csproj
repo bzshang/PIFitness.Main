@@ -76,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PIFitness.AFSync\PIFitness.AFSync.csproj">
+      <Project>{b949a5f2-364f-4151-ade9-19bac07d8516}</Project>
+      <Name>PIFitness.AFSync</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIFitness.Domain\PIFitness.Domain.csproj">
       <Project>{8311ab75-6203-4bb7-a3d1-cef092285323}</Project>
       <Name>PIFitness.Domain</Name>

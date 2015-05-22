@@ -1,8 +1,8 @@
 ﻿namespace PIFitness.GPX.Interfaces
 {
-    public interface IGPXRowProcessor<T>
+    public interface IGPXRowProcessor
     {
-        RouteInfo ProcessRow(T row);
+        RouteInfo ProcessRow(GPXEntry row);
         
     }
 }

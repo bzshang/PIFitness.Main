@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Domain", "PIFitne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.GPX", "PIFitness.GPX\PIFitness.GPX.csproj", "{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.AFSync", "PIFitness.AFSync\PIFitness.AFSync.csproj", "{B949A5F2-364F-4151-ADE9-19BAC07D8516}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B949A5F2-364F-4151-ADE9-19BAC07D8516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B949A5F2-364F-4151-ADE9-19BAC07D8516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B949A5F2-364F-4151-ADE9-19BAC07D8516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B949A5F2-364F-4151-ADE9-19BAC07D8516}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
