@@ -93,7 +93,7 @@ namespace PIFitness.GPX
                 // find split in string and separate into name and date of activity
                 if (temp == null)
                 {
-                    PIFitnessLog.Write(TraceEventType.Information, 0, "activity name is null");
+                    PIFitnessLog.Write(TraceEventType.Information, 0, "Activity name is null");
                     return activityName;
                 }
                 
@@ -109,7 +109,7 @@ namespace PIFitness.GPX
                 string creator = gpxObj.creator;
                 if (creator == null)
                 {
-                    PIFitnessLog.Write(TraceEventType.Information, 0, "creator is null");
+                    PIFitnessLog.Write(TraceEventType.Information, 0, "Gpx creator element is null");
                     return activityName;
                 }
                 

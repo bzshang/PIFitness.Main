@@ -143,6 +143,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GPXDbWriter.cs" />
     <Compile Include="GPXProcessor.cs" />
     <Compile Include="GPXDbContext.cs" />
     <Compile Include="GPXEntry.cs" />

@@ -15,12 +15,12 @@ namespace PIFitness.GPX
             get { return gpxContext.RunKeepers; }
         }
 
-        public void SaveSettings(GPXEntry rkEntry)
+        public void SaveSettings(GPXEntry gpxEntry)
         {
-            GPXEntry dbEntry = gpxContext.RunKeepers.Find(rkEntry.Id);
+            GPXEntry dbEntry = gpxContext.RunKeepers.Find(gpxEntry.Id);
             if (dbEntry != null)
             {
-                gpxContext.Entry(dbEntry).CurrentValues.SetValues(rkEntry);
+                gpxContext.Entry(dbEntry).CurrentValues.SetValues(gpxEntry);
             }
 
             gpxContext.SaveChanges();

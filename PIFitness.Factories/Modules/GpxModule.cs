@@ -20,6 +20,7 @@ namespace PIFitness.Factories.Modules
             //Bind<IPIFitnessProcessor>().To<GPXProcessor>();
             Bind<IGPXRowProcessor>().To<GPXRowProcessor>();
             Bind<IPIFitnessTableFilter<GPXEntry>>().To<GPXTableFilter>();
+            Bind<IPIFitnessTableWriter<GPXEntry>>().To<GPXDbWriter>();
             Bind<IPIFitnessTableReader<GPXEntry>>().To<GPXDbReader>();
             Bind<IGPXEFWriter>().To<GPXEFWriter>();
 

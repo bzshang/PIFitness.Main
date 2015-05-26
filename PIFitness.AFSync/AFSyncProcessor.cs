@@ -36,6 +36,7 @@ namespace PIFitness.AFSync
             {
                 try
                 {
+                    PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Checking if AF Element exists for user {0}", row.UserName));
                     string userName = row.UserName;
                     string id = row.Id;
                     _elementWriter.CreateUserElementTree(userName, id);

@@ -2,6 +2,6 @@
 {
     public interface IGPXEFWriter
     {
-        void CreateEventFrame(RouteInfo efInfo);
+        bool CreateEventFrame(RouteInfo efInfo);
     }
 }

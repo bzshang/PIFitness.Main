@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\IPIFitnessProcessor.cs" />
     <Compile Include="Interfaces\IPIFitnessTableFilter.cs" />
     <Compile Include="Interfaces\IPIFitnessTableReader.cs" />
+    <Compile Include="Interfaces\IPIFitnessTableWriter.cs" />
     <Compile Include="Interfaces\IPIFitnessValueWriter.cs" />
     <Compile Include="PIFitnessElementWriter.cs" />
     <Compile Include="PIFitnessValueWriter.cs" />

@@ -17,13 +17,15 @@ namespace PIFitness.Domain
 
         public PIFitnessValueWriter() { }
 
-        public void UpdateValues(IList<AFValues> valsList)
+        public bool UpdateValues(IList<AFValues> valsList)
         {
             IList<AFValue> valsToWrite = new List<AFValue>();
 
             valsToWrite = valsList.SelectMany(i => i).ToList();
 
             AFErrors<AFValue> errors = AFListData.UpdateValues(valsToWrite, AFUpdateOption.Replace);
+
+            return (errors == null) ? true : false;
         }
 
     }

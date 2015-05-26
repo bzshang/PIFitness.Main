@@ -28,30 +28,39 @@ namespace PIFitness.GPX
             _efTemplate = efTemplate;
         }
 
-        public void CreateEventFrame(RouteInfo routeInfo)
+        public bool CreateEventFrame(RouteInfo routeInfo)
         {
-            AFElement element = routeInfo.Element;
-            string name = routeInfo.UniqueName;
-            AFTime start = routeInfo.StartTime;
-            AFTime end = routeInfo.EndTime;
+            try
+            { 
+                AFElement element = routeInfo.Element;
+                string name = routeInfo.UniqueName;
+                AFTime start = routeInfo.StartTime;
+                AFTime end = routeInfo.EndTime;
 
-            AFNamedCollectionList<AFEventFrame> listEF = element.GetEventFrames(new AFTime("*"), 0, 1, AFEventFrameSearchMode.BackwardFromStartTime, name, null, _efTemplate);
-            //AFNamedCollectionList <AFEventFrame> listEF = AFEventFrame.FindEventFrames(element.Database, null, name, AFSearchField.Name, true, AFSortField.StartTime, AFSortOrder.Ascending, 0, 1);
+                AFNamedCollectionList<AFEventFrame> listEF = element.Elements["GPX"].GetEventFrames(new AFTime("*"), 0, 1, AFEventFrameSearchMode.BackwardFromStartTime, name, null, _efTemplate);
 
-            if (listEF.Count > 0)
+                if (listEF.Count > 0)
+                {
+                    PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Event frame already exists: {0}", name));
+                    return true;
+                }
+
+                AFEventFrame newEF = new AFEventFrame(_db, name, _efTemplate);
+                newEF.SetStartTime(start);
+                newEF.SetEndTime(end);
+                newEF.PrimaryReferencedElement = element.Elements["GPX"];
+                newEF.CheckIn();
+
+                _db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisThread);
+                _db.Refresh();
+
+                return true;
+            }
+            catch
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Event frame already exists: {0}", name));
-                return;
+                return false;
             }
 
-            AFEventFrame newEF = new AFEventFrame(_db, name, _efTemplate);
-            newEF.SetStartTime(start);
-            newEF.SetEndTime(end);
-            newEF.PrimaryReferencedElement = element.Elements["GPX"];
-            newEF.CheckIn();
-
-            _db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisThread);
-            _db.Refresh();
         }
 
     }

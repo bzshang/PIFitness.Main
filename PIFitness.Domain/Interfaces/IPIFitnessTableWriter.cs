@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using OSIsoft.AF.Asset;
-
 namespace PIFitness.Domain.Interfaces
 {
-    public interface IPIFitnessValueWriter
+    public interface IPIFitnessTableWriter<T>
     {
-        bool UpdateValues(IList<AFValues> vals);
+        void UpdateRow(T row);
     }
 }

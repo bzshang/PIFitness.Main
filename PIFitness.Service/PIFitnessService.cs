@@ -42,12 +42,12 @@ namespace PIFitness.Service
 
             IKernel kernel = new StandardKernel(new AFSyncModule(), new GpxModule(), new DomainModule());
 
-            IPIFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();
-            //IPIFitnessProcessor gpxProcessor = kernel.Get<AFSyncProcessor>();
+            IPIFitnessProcessor afSyncProcessor = kernel.Get<AFSyncProcessor>();
+            IPIFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();      
 
             _serviceWorker = kernel.Get<ServiceWorker>();
+            _serviceWorker.AddProcessor(afSyncProcessor);
             _serviceWorker.AddProcessor(gpxProcessor);
-            
 
             BeginOperation();
         }

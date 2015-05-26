@@ -25,15 +25,19 @@ namespace PIFitness.GPX
 
         private IGPXEFWriter _efWriter;
 
+        private IPIFitnessTableWriter<GPXEntry> _writer;
+
         public GPXProcessor(IPIFitnessTableReader<GPXEntry> reader, 
             IGPXRowProcessor rowProcessor,
             IPIFitnessValueWriter valueWriter,
-            IGPXEFWriter efWriter)
+            IGPXEFWriter efWriter,
+            IPIFitnessTableWriter<GPXEntry> writer)
         {
             _reader = reader;
             _rowProcessor = rowProcessor;
             _valueWriter = valueWriter;
             _efWriter = efWriter;
+            _writer = writer;
         }
 
         public void Process()
@@ -46,23 +50,28 @@ namespace PIFitness.GPX
             }
 
             //_db.Refresh();
-            Parallel.ForEach<GPXEntry>(table, new ParallelOptions { MaxDegreeOfParallelism = 4 }, row =>
-            //foreach (var row in table)
+            //Parallel.ForEach<GPXEntry>(table, new ParallelOptions { MaxDegreeOfParallelism = 4 }, row =>
+            foreach (var row in table)
             {
                 try
                 {
                     RouteInfo routeInfo = ProcessRow(row);
                     if (routeInfo != null)
                     {
-                        UpdateValues(routeInfo.Values);
-                        CreateEventFrame(routeInfo);
+                        bool bUpdatedValues = UpdateValues(routeInfo.Values);
+                        bool bCreatedEF = CreateEventFrame(routeInfo);
+                        if (bUpdatedValues && bCreatedEF)
+                        {
+                            SetRowProcessed(row);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
                     PIFitnessLog.Write(TraceEventType.Information, 0, ex);
                 }
-            });
+            }
+            //});
             //_db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisSession);
             
 
@@ -85,14 +94,20 @@ namespace PIFitness.GPX
             return tableRowInfo;
         }
 
-        private void UpdateValues(IList<AFValues> vals)
+        private void SetRowProcessed(GPXEntry row)
         {
-            _valueWriter.UpdateValues(vals);
+            row.Processed = true;
+            _writer.UpdateRow(row);
         }
 
-        private void CreateEventFrame(RouteInfo routeInfo)
+        private bool UpdateValues(IList<AFValues> vals)
         {
-            _efWriter.CreateEventFrame(routeInfo);
+            return _valueWriter.UpdateValues(vals);
+        }
+
+        private bool CreateEventFrame(RouteInfo routeInfo)
+        {
+            return _efWriter.CreateEventFrame(routeInfo);
         }
 
 

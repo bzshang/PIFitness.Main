@@ -23,10 +23,10 @@ namespace PIFitness.Domain
         public AFElement GetElementFromGuid(string id)
         {
             AFElement element = null;
-            lock (_lockObject)
-            {
+            //lock (_lockObject)
+            //{
                 element = _db.Elements.DefaultIfEmpty(null).FirstOrDefault(i => i.Attributes["Guid"].GetValue().ToString() == id);
-            }
+            //}
             return element;
         }
 
