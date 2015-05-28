@@ -12,10 +12,10 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.Domain
 {
-    public class PIFitnessValueWriter : IPIFitnessValueWriter
+    public class ValueWriter : IValueWriter
     {
 
-        public PIFitnessValueWriter() { }
+        public ValueWriter() { }
 
         public bool UpdateValues(IList<AFValues> valsList)
         {

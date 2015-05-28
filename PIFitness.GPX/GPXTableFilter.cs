@@ -8,7 +8,7 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.GPX
 {
-    public class GPXTableFilter : IPIFitnessTableFilter<GPXEntry>
+    public class GPXTableFilter : ITableFilter<GPXEntry>
     {
 
         public IQueryable<GPXEntry> FilterTable(IQueryable<GPXEntry> table)

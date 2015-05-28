@@ -9,13 +9,13 @@ using OSIsoft.AF.Asset;
 
 namespace PIFitness.Domain
 {
-    public class AFElementLookup
+    public class ElementLookup
     {
         private AFDatabase _db;
 
-        private object _lockObject = new object();
+        //private object _lockObject = new object();
 
-        public AFElementLookup(AFDatabase db)
+        public ElementLookup(AFDatabase db)
         {
             _db = db;
         }
@@ -23,7 +23,7 @@ namespace PIFitness.Domain
         public AFElement GetElementFromGuid(string id)
         {
             AFElement element = null;
-            //lock (_lockObject)
+            //lock (_db)
             //{
                 element = _db.Elements.DefaultIfEmpty(null).FirstOrDefault(i => i.Attributes["Guid"].GetValue().ToString() == id);
             //}

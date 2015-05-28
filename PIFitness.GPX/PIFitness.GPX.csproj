@@ -143,12 +143,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GPXDbWriter.cs" />
+    <Compile Include="GPXTableWriter.cs" />
     <Compile Include="GPXProcessor.cs" />
     <Compile Include="GPXDbContext.cs" />
     <Compile Include="GPXEntry.cs" />
     <Compile Include="GPXRepository.cs" />
-    <Compile Include="GPXDbReader.cs" />
+    <Compile Include="GPXTableReader.cs" />
     <Compile Include="GPXRowProcessor.cs" />
     <Compile Include="GPXTableFilter.cs" />
     <Compile Include="GpxType.cs" />
@@ -168,9 +168,9 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0-rc2\tools\analyzers\C#\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PIFitness.Domain\PIFitness.Domain.csproj">
+    <ProjectReference Include="..\PIFitness.Domain\PIFitness.Common.csproj">
       <Project>{8311ab75-6203-4bb7-a3d1-cef092285323}</Project>
-      <Name>PIFitness.Domain</Name>
+      <Name>PIFitness.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIFitness.Log\PIFitness.Log.csproj">
       <Project>{61a88c21-a03b-4c5d-8aa0-2f4d59703ec7}</Project>

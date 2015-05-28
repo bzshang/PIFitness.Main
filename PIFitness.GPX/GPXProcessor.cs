@@ -17,30 +17,30 @@ using PIFitness.GPX.Interfaces;
 
 namespace PIFitness.GPX
 {
-    public class GPXProcessor : IPIFitnessProcessor
+    public class GPXProcessor : IFitnessProcessor
     {
-        private IPIFitnessTableReader<GPXEntry> _reader;
+        private ITableReader<GPXEntry> _reader;
 
         private IGPXRowProcessor _rowProcessor;
 
-        private IPIFitnessValueWriter _valueWriter;
+        private IValueWriter _valueWriter;
 
-        private IPIFitnessElementWriter _elementWriter;
+        private IElementWriter _elementWriter;
 
         private IGPXEFWriter _efWriter;
 
-        private IPIFitnessTableWriter<GPXEntry> _writer;
+        private ITableWriter<GPXEntry> _writer;
 
         private AFElementTemplate _template;
 
         private const string FITNESS_ELEMENT_NAME = "GPX";
 
-        public GPXProcessor(IPIFitnessTableReader<GPXEntry> reader, 
+        public GPXProcessor(ITableReader<GPXEntry> reader, 
             IGPXRowProcessor rowProcessor,
-            IPIFitnessValueWriter valueWriter,
+            IValueWriter valueWriter,
             IGPXEFWriter efWriter,
-            IPIFitnessTableWriter<GPXEntry> writer,
-            IPIFitnessElementWriter elementWriter,
+            ITableWriter<GPXEntry> writer,
+            IElementWriter elementWriter,
             [Named("GpxElement")] AFElementTemplate gpxTemplate)
         {
             _reader = reader;
@@ -61,7 +61,9 @@ namespace PIFitness.GPX
                 return;
             }
 
-            //_db.Refresh();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             //Parallel.ForEach<GPXEntry>(table, new ParallelOptions { MaxDegreeOfParallelism = 4 }, row =>
             foreach (var row in table)
             {
@@ -86,7 +88,10 @@ namespace PIFitness.GPX
             }
             //});
             //_db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisSession);
-            
+            sw.Stop();
+
+            PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Time to process GPX: {0}", sw.Elapsed.ToString()));
+
 
         }
 

@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AFSyncProcessor.cs" />
+    <Compile Include="UserSyncProcessor.cs" />
     <Compile Include="UserTableFilter.cs" />
     <Compile Include="UserDbReader.cs" />
     <Compile Include="UserDbContext.cs" />
@@ -63,9 +63,9 @@
     <Compile Include="UserEntry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PIFitness.Domain\PIFitness.Domain.csproj">
+    <ProjectReference Include="..\PIFitness.Domain\PIFitness.Common.csproj">
       <Project>{8311ab75-6203-4bb7-a3d1-cef092285323}</Project>
-      <Name>PIFitness.Domain</Name>
+      <Name>PIFitness.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIFitness.Log\PIFitness.Log.csproj">
       <Project>{61a88c21-a03b-4c5d-8aa0-2f4d59703ec7}</Project>

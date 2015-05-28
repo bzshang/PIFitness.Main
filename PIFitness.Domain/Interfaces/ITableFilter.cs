@@ -2,7 +2,7 @@
 
 namespace PIFitness.Domain.Interfaces
 {
-    public interface IPIFitnessTableFilter<T>
+    public interface ITableFilter<T>
     {
         IQueryable<T> FilterTable(IQueryable<T> table);
 

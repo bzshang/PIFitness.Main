@@ -8,8 +8,8 @@ using OSIsoft.AF.Asset;
 
 namespace PIFitness.Domain.Interfaces
 {
-    public interface IPIFitnessValueWriter
+    public interface IFitnessProcessor
     {
-        bool UpdateValues(IList<AFValues> vals);
+        void Process();
     }
 }

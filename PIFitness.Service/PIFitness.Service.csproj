@@ -76,13 +76,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PIFitness.AFSync\PIFitness.AFSync.csproj">
+    <ProjectReference Include="..\PIFitness.AFSync\PIFitness.UserSync.csproj">
       <Project>{b949a5f2-364f-4151-ade9-19bac07d8516}</Project>
-      <Name>PIFitness.AFSync</Name>
+      <Name>PIFitness.UserSync</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PIFitness.Domain\PIFitness.Domain.csproj">
+    <ProjectReference Include="..\PIFitness.Domain\PIFitness.Common.csproj">
       <Project>{8311ab75-6203-4bb7-a3d1-cef092285323}</Project>
-      <Name>PIFitness.Domain</Name>
+      <Name>PIFitness.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIFitness.Factories\PIFitness.Factories.csproj">
       <Project>{ae5fff8c-292b-4e80-bc60-c453245bae44}</Project>

@@ -8,7 +8,7 @@ using OSIsoft.AF.Asset;
 
 namespace PIFitness.Domain.Interfaces
 {
-    public interface IPIFitnessElementWriter
+    public interface IElementWriter
     {
         void CreateUserElement(string userName, string id, AFElementTemplate template);
 

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using OSIsoft.AF.Asset;
-
 namespace PIFitness.Domain.Interfaces
 {
-    public interface IPIFitnessProcessor
+    public interface ITableWriter<T>
     {
-        void Process();
+        void UpdateRow(T row);
     }
 }

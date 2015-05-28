@@ -11,12 +11,12 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.Factories.Modules
 {
-    public class AFSyncModule : NinjectModule
+    public class UserSyncModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<IPIFitnessTableReader<UserEntry>>().To<UserDbReader>();
-            Bind<IPIFitnessTableFilter<UserEntry>>().To<UserTableFilter>();
+            Bind<ITableReader<UserEntry>>().To<UserDbReader>();
+            Bind<ITableFilter<UserEntry>>().To<UserTableFilter>();
 
         }
     }

@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Log", "PIFitness.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Factories", "PIFitness.Factories\PIFitness.Factories.csproj", "{AE5FFF8C-292B-4E80-BC60-C453245BAE44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Domain", "PIFitness.Domain\PIFitness.Domain.csproj", "{8311AB75-6203-4BB7-A3D1-CEF092285323}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Common", "PIFitness.Domain\PIFitness.Common.csproj", "{8311AB75-6203-4BB7-A3D1-CEF092285323}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.GPX", "PIFitness.GPX\PIFitness.GPX.csproj", "{22F26166-95C5-43A2-9E6A-F8FDB7FD6AD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.AFSync", "PIFitness.AFSync\PIFitness.AFSync.csproj", "{B949A5F2-364F-4151-ADE9-19BAC07D8516}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.UserSync", "PIFitness.AFSync\PIFitness.UserSync.csproj", "{B949A5F2-364F-4151-ADE9-19BAC07D8516}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

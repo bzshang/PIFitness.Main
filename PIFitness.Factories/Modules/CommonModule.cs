@@ -17,7 +17,7 @@ using OSIsoft.AF.Asset;
 
 namespace PIFitness.Factories.Modules
 {
-    public class DomainModule : NinjectModule
+    public class CommonModule : NinjectModule
     {
         //private AFDatabase _db;
 
@@ -29,10 +29,10 @@ namespace PIFitness.Factories.Modules
 
         public override void Load()
         {
-            Bind<IPIFitnessValueWriter>().To<PIFitnessValueWriter>().InSingletonScope(); 
-            Bind<IPIFitnessElementWriter>().To<PIFitnessElementWriter>().InSingletonScope();
+            Bind<IValueWriter>().To<ValueWriter>().InSingletonScope(); 
+            Bind<IElementWriter>().To<ElementWriter>().InSingletonScope();
 
-            Bind<AFElementLookup>().ToSelf().InSingletonScope();
+            Bind<ElementLookup>().ToSelf().InSingletonScope();
 
             Bind<AFDatabase>().ToMethod(context => AFFactory.GetAFDatabase()).InSingletonScope();
 

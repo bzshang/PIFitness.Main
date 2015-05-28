@@ -15,11 +15,11 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.Domain
 {
-    public class PIFitnessElementWriter : IPIFitnessElementWriter
+    public class ElementWriter : IElementWriter
     {
         private AFDatabase _db;
 
-        public PIFitnessElementWriter(AFDatabase db)
+        public ElementWriter(AFDatabase db)
         {
             _db = db;
         }
@@ -52,16 +52,19 @@ namespace PIFitness.Domain
                 return;
             }
 
-            AFElement fitnessElement = userElement.Elements[elementName];
+            //lock(_db)
+            //{
+                AFElement fitnessElement = userElement.Elements[elementName];
 
-            if (fitnessElement == null)
-            {
-                fitnessElement = userElement.Elements.Add(elementName, template);
-                AFDataReference.CreateConfig(fitnessElement, false, null);
+                if (fitnessElement == null)
+                {
+                    fitnessElement = userElement.Elements.Add(elementName, template);
+                    AFDataReference.CreateConfig(fitnessElement, false, null);
 
-                _db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisThread);
-                PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Created fitness element {0} for user {1}", elementName, userName));
-            }
+                    _db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisThread);
+                    PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Created fitness element {0} for user {1}", elementName, userName));
+                }
+            //}
         }
 
 

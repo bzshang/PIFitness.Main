@@ -14,15 +14,15 @@ using OSIsoft.AF.Asset;
 
 namespace PIFitness.AFSync
 {
-    public class AFSyncProcessor : IPIFitnessProcessor
+    public class UserSyncProcessor : IFitnessProcessor
     {
-        private IPIFitnessTableReader<UserEntry> _reader;
+        private ITableReader<UserEntry> _reader;
 
-        private IPIFitnessElementWriter _elementWriter;
+        private IElementWriter _elementWriter;
 
         private AFElementTemplate _template;
 
-        public AFSyncProcessor(IPIFitnessTableReader<UserEntry> reader, IPIFitnessElementWriter elementWriter,
+        public UserSyncProcessor(ITableReader<UserEntry> reader, IElementWriter elementWriter,
             [Named("UserElement")] AFElementTemplate userTemplate)
         {
             _reader = reader;

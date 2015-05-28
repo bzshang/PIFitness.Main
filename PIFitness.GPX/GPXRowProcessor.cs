@@ -19,9 +19,9 @@ namespace PIFitness.GPX
     public class GPXRowProcessor : IGPXRowProcessor
     {
 
-        private AFElementLookup _lookup;
+        private ElementLookup _lookup;
 
-        public GPXRowProcessor(AFElementLookup lookup)
+        public GPXRowProcessor(ElementLookup lookup)
         {
             _lookup = lookup;
         }

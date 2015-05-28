@@ -8,7 +8,7 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.AFSync
 {
-    public class UserTableFilter : IPIFitnessTableFilter<UserEntry>
+    public class UserTableFilter : ITableFilter<UserEntry>
     {
 
         public IQueryable<UserEntry> FilterTable(IQueryable<UserEntry> table)

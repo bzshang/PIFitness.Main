@@ -10,23 +10,23 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.GPX
 {
-    public class GPXDbWriter : IPIFitnessTableWriter<GPXEntry>
+    public class GPXTableWriter : ITableWriter<GPXEntry>
     {
         private GPXRepository _gpxRepository;
 
         private object _lockObject = new object();
 
-        public GPXDbWriter(GPXRepository gpxRepository)
+        public GPXTableWriter(GPXRepository gpxRepository)
         {
             _gpxRepository = gpxRepository;
         }
 
         public void UpdateRow(GPXEntry row)
         {
-            lock (_lockObject)
-            {
+            //lock (_lockObject)
+            //{
                 _gpxRepository.SaveSettings(row);
-            }
+            //}
         }
 
 

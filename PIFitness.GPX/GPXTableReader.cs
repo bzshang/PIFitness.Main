@@ -10,13 +10,13 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.GPX
 {
-    public class GPXDbReader : IPIFitnessTableReader<GPXEntry>
+    public class GPXTableReader : ITableReader<GPXEntry>
     {
         private GPXRepository _gpxRepository;
 
-        private IPIFitnessTableFilter<GPXEntry> _filter;
+        private ITableFilter<GPXEntry> _filter;
 
-        public GPXDbReader(GPXRepository gpxRepository, IPIFitnessTableFilter<GPXEntry> filter)
+        public GPXTableReader(GPXRepository gpxRepository, ITableFilter<GPXEntry> filter)
         {
             _gpxRepository = gpxRepository;
             _filter = filter;

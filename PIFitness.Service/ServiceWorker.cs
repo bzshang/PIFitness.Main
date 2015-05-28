@@ -15,14 +15,14 @@ namespace PIFitness.Service
 {
     public class ServiceWorker
     {
-        private IList<IPIFitnessProcessor> _processorList;
+        private IList<IFitnessProcessor> _processorList;
 
-        public ServiceWorker(IList<IPIFitnessProcessor> processorList)
+        public ServiceWorker(IList<IFitnessProcessor> processorList)
         {
             this._processorList = processorList;
         }
 
-        public void AddProcessor(IPIFitnessProcessor processor)
+        public void AddProcessor(IFitnessProcessor processor)
         {
             _processorList.Add(processor);
         }

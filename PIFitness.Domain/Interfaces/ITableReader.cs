@@ -3,7 +3,7 @@
 
 namespace PIFitness.Domain.Interfaces
 {
-    public interface IPIFitnessTableReader<T>
+    public interface ITableReader<T>
     {
         IQueryable<T> Read();
     }

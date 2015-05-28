@@ -9,13 +9,13 @@ using PIFitness.Domain.Interfaces;
 
 namespace PIFitness.AFSync
 {
-    public class UserDbReader : IPIFitnessTableReader<UserEntry>
+    public class UserDbReader : ITableReader<UserEntry>
     {
         private UserRepository _userRepository;
 
-        private IPIFitnessTableFilter<UserEntry> _filter;
+        private ITableFilter<UserEntry> _filter;
 
-        public UserDbReader(UserRepository gpxRepository, IPIFitnessTableFilter<UserEntry> filter)
+        public UserDbReader(UserRepository gpxRepository, ITableFilter<UserEntry> filter)
         {
             _userRepository = gpxRepository;
             _filter = filter;

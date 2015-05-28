@@ -40,10 +40,10 @@ namespace PIFitness.Service
             PIFitnessLog.ConfigureLogging();
             PIFitnessLog.Write(TraceEventType.Information, 0, "PI Fitness Service is starting");
 
-            IKernel kernel = new StandardKernel(new AFSyncModule(), new GpxModule(), new DomainModule());
+            IKernel kernel = new StandardKernel(new UserSyncModule(), new GpxModule(), new CommonModule());
 
-            IPIFitnessProcessor afSyncProcessor = kernel.Get<AFSyncProcessor>();
-            IPIFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();      
+            IFitnessProcessor afSyncProcessor = kernel.Get<UserSyncProcessor>();
+            IFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();      
 
             _serviceWorker = kernel.Get<ServiceWorker>();
             _serviceWorker.AddProcessor(afSyncProcessor);
