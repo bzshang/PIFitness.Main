@@ -5,8 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
+using Ninject;
+
 using PIFitness.Log;
 using PIFitness.Domain.Interfaces;
+
+using OSIsoft.AF.Asset;
 
 namespace PIFitness.AFSync
 {
@@ -16,10 +20,14 @@ namespace PIFitness.AFSync
 
         private IPIFitnessElementWriter _elementWriter;
 
-        public AFSyncProcessor(IPIFitnessTableReader<UserEntry> reader, IPIFitnessElementWriter elementWriter)
+        private AFElementTemplate _template;
+
+        public AFSyncProcessor(IPIFitnessTableReader<UserEntry> reader, IPIFitnessElementWriter elementWriter,
+            [Named("UserElement")] AFElementTemplate userTemplate)
         {
             _reader = reader;
             _elementWriter = elementWriter;
+            _template = userTemplate;
         }
 
 
@@ -39,7 +47,7 @@ namespace PIFitness.AFSync
                     PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Checking if AF Element exists for user {0}", row.UserName));
                     string userName = row.UserName;
                     string id = row.Id;
-                    _elementWriter.CreateUserElementTree(userName, id);
+                    _elementWriter.CreateUserElement(userName, id, _template);
                 }
                 catch (Exception ex)
                 {
@@ -53,7 +61,6 @@ namespace PIFitness.AFSync
         private IQueryable<UserEntry> GetTable()
         {
             IQueryable<UserEntry> result = _reader.Read();
-
             return result;
         }
     }

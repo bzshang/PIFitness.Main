@@ -181,8 +181,8 @@ namespace PIFitness.GPX
                 //update latitude, longitude, and elevation
 
                 AFAttribute elevationAttribute = element.Elements["GPX"].Attributes["Elevation"];
-                AFAttribute latitudeAttribute = element.Elements["GPX"].Attributes["Longitude"];
-                AFAttribute longitudeAttribute = element.Elements["GPX"].Attributes["Latitude"];
+                AFAttribute latitudeAttribute = element.Elements["GPX"].Attributes["Latitude"];
+                AFAttribute longitudeAttribute = element.Elements["GPX"].Attributes["Longitude"];
 
                 AFValues listElevationValues = new AFValues();
                 AFValues listLatitudeValues = new AFValues();

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
+using Ninject;
+
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.Time;
@@ -23,21 +25,31 @@ namespace PIFitness.GPX
 
         private IPIFitnessValueWriter _valueWriter;
 
+        private IPIFitnessElementWriter _elementWriter;
+
         private IGPXEFWriter _efWriter;
 
         private IPIFitnessTableWriter<GPXEntry> _writer;
+
+        private AFElementTemplate _template;
+
+        private const string FITNESS_ELEMENT_NAME = "GPX";
 
         public GPXProcessor(IPIFitnessTableReader<GPXEntry> reader, 
             IGPXRowProcessor rowProcessor,
             IPIFitnessValueWriter valueWriter,
             IGPXEFWriter efWriter,
-            IPIFitnessTableWriter<GPXEntry> writer)
+            IPIFitnessTableWriter<GPXEntry> writer,
+            IPIFitnessElementWriter elementWriter,
+            [Named("GpxElement")] AFElementTemplate gpxTemplate)
         {
             _reader = reader;
             _rowProcessor = rowProcessor;
             _valueWriter = valueWriter;
             _efWriter = efWriter;
             _writer = writer;
+            _template = gpxTemplate;
+            _elementWriter = elementWriter;
         }
 
         public void Process()
@@ -55,6 +67,7 @@ namespace PIFitness.GPX
             {
                 try
                 {
+                    CreateFitnessElement(row.UserName, FITNESS_ELEMENT_NAME, _template);
                     RouteInfo routeInfo = ProcessRow(row);
                     if (routeInfo != null)
                     {
@@ -75,6 +88,11 @@ namespace PIFitness.GPX
             //_db.CheckIn(AFCheckedOutMode.ObjectsCheckedOutThisSession);
             
 
+        }
+
+        private void CreateFitnessElement(string userName, string elementName, AFElementTemplate template)
+        {
+            _elementWriter.CreateFitnessElement(userName, elementName, template);
         }
 
         private IQueryable<GPXEntry> GetTable()
