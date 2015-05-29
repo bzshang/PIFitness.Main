@@ -67,6 +67,16 @@ namespace PIFitness.Domain
             //}
         }
 
+        public AFElement GetElementFromGuid(string id)
+        {
+            AFElement element = null;
+            //lock (_db)
+            //{
+            element = _db.Elements.DefaultIfEmpty(null).FirstOrDefault(i => i.Attributes["Guid"].GetValue().ToString() == id);
+            //}
+            return element;
+        }
+
 
 
     }

@@ -23,33 +23,41 @@ namespace PIFitness.GPX
 
         private IGPXRowProcessor _rowProcessor;
 
-        private IValueWriter _valueWriter;
+        private IAFAccess _afAccess;
 
-        private IElementWriter _elementWriter;
+        //private IValueWriter _valueWriter;
 
-        private IGPXEFWriter _efWriter;
+        //private IElementWriter _elementWriter;
+
+        //private IEventFrameWriter _efWriter;
 
         private ITableWriter<GPXEntry> _writer;
 
         private AFElementTemplate _template;
 
+        private AFElementTemplate _efTemplate;
+
         private const string FITNESS_ELEMENT_NAME = "GPX";
 
         public GPXProcessor(ITableReader<GPXEntry> reader, 
             IGPXRowProcessor rowProcessor,
-            IValueWriter valueWriter,
-            IGPXEFWriter efWriter,
+            IAFAccess afAccess,
+            //IValueWriter valueWriter,
+            //IEventFrameWriter efWriter,
             ITableWriter<GPXEntry> writer,
-            IElementWriter elementWriter,
-            [Named("GpxElement")] AFElementTemplate gpxTemplate)
+            //IElementWriter elementWriter,
+            [Named("GpxElement")] AFElementTemplate gpxTemplate,
+            [Named("GpxEventFrame")] AFElementTemplate efTemplate)
         {
             _reader = reader;
             _rowProcessor = rowProcessor;
-            _valueWriter = valueWriter;
-            _efWriter = efWriter;
+            _afAccess = afAccess;
+            //_valueWriter = valueWriter;
+            //_efWriter = efWriter;
             _writer = writer;
             _template = gpxTemplate;
-            _elementWriter = elementWriter;
+            //_elementWriter = elementWriter;
+            _efTemplate = efTemplate;
         }
 
         public void Process()
@@ -70,7 +78,9 @@ namespace PIFitness.GPX
                 try
                 {
                     CreateFitnessElement(row.UserName, FITNESS_ELEMENT_NAME, _template);
+
                     RouteInfo routeInfo = ProcessRow(row);
+
                     if (routeInfo != null)
                     {
                         bool bUpdatedValues = UpdateValues(routeInfo.Values);
@@ -80,6 +90,7 @@ namespace PIFitness.GPX
                             SetRowProcessed(row);
                         }
                     }
+
                 }
                 catch (Exception ex)
                 {
@@ -97,7 +108,7 @@ namespace PIFitness.GPX
 
         private void CreateFitnessElement(string userName, string elementName, AFElementTemplate template)
         {
-            _elementWriter.CreateFitnessElement(userName, elementName, template);
+            _afAccess.CreateFitnessElement(userName, elementName, template);
         }
 
         private IQueryable<GPXEntry> GetTable()
@@ -125,12 +136,25 @@ namespace PIFitness.GPX
 
         private bool UpdateValues(IList<AFValues> vals)
         {
-            return _valueWriter.UpdateValues(vals);
+            return _afAccess.UpdateValues(vals);
         }
 
         private bool CreateEventFrame(RouteInfo routeInfo)
         {
-            return _efWriter.CreateEventFrame(routeInfo);
+            AFElement element = routeInfo.Element.Elements["GPX"];
+            bool efExists = _afAccess.CheckEventFrameExists(element, routeInfo.UniqueName, _efTemplate);
+
+            bool isCreated = false;
+            if (!efExists)
+            {
+                isCreated = _afAccess.CreateEventFrame(routeInfo.UniqueName, 
+                    routeInfo.StartTime, 
+                    routeInfo.EndTime,
+                    element, _efTemplate);
+            }
+
+            return isCreated;
+
         }
 
 

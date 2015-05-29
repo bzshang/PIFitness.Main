@@ -29,8 +29,12 @@ namespace PIFitness.Factories.Modules
 
         public override void Load()
         {
+            Bind<IAFAccess>().To<AFAccess>().InSingletonScope();
+
+
             Bind<IValueWriter>().To<ValueWriter>().InSingletonScope(); 
             Bind<IElementWriter>().To<ElementWriter>().InSingletonScope();
+            Bind<IEventFrameWriter>().To<EventFrameWriter>().InSingletonScope();
 
             Bind<ElementLookup>().ToSelf().InSingletonScope();
 

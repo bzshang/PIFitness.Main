@@ -12,6 +12,7 @@ using OSIsoft.AF.Time;
 
 using PIFitness.Log;
 using PIFitness.Domain;
+using PIFitness.Domain.Interfaces;
 using PIFitness.GPX.Interfaces;
 
 namespace PIFitness.GPX
@@ -19,11 +20,11 @@ namespace PIFitness.GPX
     public class GPXRowProcessor : IGPXRowProcessor
     {
 
-        private ElementLookup _lookup;
+        private IElementWriter _elementWriter;
 
-        public GPXRowProcessor(ElementLookup lookup)
+        public GPXRowProcessor(IElementWriter elementWriter)
         {
-            _lookup = lookup;
+            _elementWriter = elementWriter;
         }
 
         public RouteInfo ProcessRow(GPXEntry row)
@@ -157,7 +158,7 @@ namespace PIFitness.GPX
 
         private AFElement GetElementFromGuid(string id)
         {
-            AFElement element = _lookup.GetElementFromGuid(id);
+            AFElement element = _elementWriter.GetElementFromGuid(id);
             if (element != null)
             {
                 return element;

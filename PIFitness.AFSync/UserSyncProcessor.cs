@@ -18,15 +18,20 @@ namespace PIFitness.AFSync
     {
         private ITableReader<UserEntry> _reader;
 
-        private IElementWriter _elementWriter;
+        //private IElementWriter _elementWriter;
+
+        private IAFAccess _afAccess;
 
         private AFElementTemplate _template;
 
-        public UserSyncProcessor(ITableReader<UserEntry> reader, IElementWriter elementWriter,
+        public UserSyncProcessor(ITableReader<UserEntry> reader, 
+            //IElementWriter elementWriter,
+            IAFAccess afAccess,
             [Named("UserElement")] AFElementTemplate userTemplate)
         {
             _reader = reader;
-            _elementWriter = elementWriter;
+            //_elementWriter = elementWriter;
+            _afAccess = afAccess;
             _template = userTemplate;
         }
 
@@ -47,7 +52,7 @@ namespace PIFitness.AFSync
                     PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Checking if AF Element exists for user {0}", row.UserName));
                     string userName = row.UserName;
                     string id = row.Id;
-                    _elementWriter.CreateUserElement(userName, id, _template);
+                    _afAccess.CreateUserElement(userName, id, _template);
                 }
                 catch (Exception ex)
                 {
