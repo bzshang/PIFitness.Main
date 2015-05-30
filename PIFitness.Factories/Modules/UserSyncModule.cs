@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 using Ninject.Modules;
 
-using PIFitness.AFSync;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Entities;
+using PIFitness.UserSync;
+using PIFitness.Common.Interfaces;
 
 namespace PIFitness.Factories.Modules
 {
@@ -15,8 +16,8 @@ namespace PIFitness.Factories.Modules
     {
         public override void Load()
         {
-            Bind<ITableReader<UserEntry>>().To<UserDbReader>();
-            Bind<ITableFilter<UserEntry>>().To<UserTableFilter>();
+            Bind<ITableReader<UserEntry>>().To<UserDbReader>().WhenInjectedInto(typeof(UserSyncProcessor));
+            Bind<ITableFilter<UserEntry>>().To<UserTableFilter>().WhenInjectedInto(typeof(UserDbReader));
 
         }
     }

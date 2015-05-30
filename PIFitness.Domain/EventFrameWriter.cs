@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 using Ninject;
 
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common.Interfaces;
 using PIFitness.Log;
 
 using OSIsoft.AF;
@@ -16,7 +16,7 @@ using OSIsoft.AF.EventFrame;
 using OSIsoft.AF.Time;
 
 
-namespace PIFitness.Domain
+namespace PIFitness.Common
 {
     public class EventFrameWriter : IEventFrameWriter
     {

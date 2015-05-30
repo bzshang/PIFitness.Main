@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Ninject.Modules;
 
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common.Interfaces;
 
 namespace PIFitness.Factories.Modules
 {

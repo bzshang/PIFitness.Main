@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OSIsoft.AF.Asset;
-using PIFitness.Domain;
-using PIFitness.Domain.Interfaces;
+
+using PIFitness.Entities;
+using PIFitness.Common.Interfaces;
 
 namespace PIFitness.GPX
 {

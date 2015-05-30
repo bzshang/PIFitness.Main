@@ -8,8 +8,8 @@ using System.Reflection;
 using System.Timers;
 
 using PIFitness.Log;
-using PIFitness.Domain;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common;
+using PIFitness.Common.Interfaces;
 
 namespace PIFitness.Service
 {

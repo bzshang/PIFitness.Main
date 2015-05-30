@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIFitness.Domain.Interfaces
+namespace PIFitness.Common.Interfaces
 {
     public interface ITableWriter<T>
     {

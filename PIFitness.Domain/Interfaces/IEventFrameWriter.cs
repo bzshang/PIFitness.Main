@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.Time;
 
-namespace PIFitness.Domain.Interfaces
+namespace PIFitness.Common.Interfaces
 {
     public interface IEventFrameWriter
     {

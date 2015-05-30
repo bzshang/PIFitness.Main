@@ -1,4 +1,6 @@
-﻿namespace PIFitness.GPX.Interfaces
+﻿using PIFitness.Entities;
+
+namespace PIFitness.GPX.Interfaces
 {
     public interface IGPXRowProcessor
     {

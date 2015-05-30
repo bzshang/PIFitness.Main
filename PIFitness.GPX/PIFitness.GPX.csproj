@@ -145,9 +145,6 @@
   <ItemGroup>
     <Compile Include="GPXTableWriter.cs" />
     <Compile Include="GPXProcessor.cs" />
-    <Compile Include="GPXDbContext.cs" />
-    <Compile Include="GPXEntry.cs" />
-    <Compile Include="GPXRepository.cs" />
     <Compile Include="GPXTableReader.cs" />
     <Compile Include="GPXRowProcessor.cs" />
     <Compile Include="GPXTableFilter.cs" />
@@ -171,6 +168,10 @@
     <ProjectReference Include="..\PIFitness.Domain\PIFitness.Common.csproj">
       <Project>{8311ab75-6203-4bb7-a3d1-cef092285323}</Project>
       <Name>PIFitness.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIFitness.Entities\PIFitness.Entities.csproj">
+      <Project>{957e64fc-d02e-4a9f-8876-341baccac780}</Project>
+      <Name>PIFitness.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIFitness.Log\PIFitness.Log.csproj">
       <Project>{61a88c21-a03b-4c5d-8aa0-2f4d59703ec7}</Project>

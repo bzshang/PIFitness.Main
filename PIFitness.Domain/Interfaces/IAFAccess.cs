@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.Time;
 
-namespace PIFitness.Domain.Interfaces
+namespace PIFitness.Common.Interfaces
 {
     public interface IAFAccess
     {
-        void CreateUserElement(string userName, string id, AFElementTemplate template);
+        void TryCreateUserElement(string userName, string id, AFElementTemplate template);
 
         void CreateFitnessElement(string userName, string elementName, AFElementTemplate template);
 

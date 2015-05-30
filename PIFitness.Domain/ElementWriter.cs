@@ -11,9 +11,9 @@ using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 
 using PIFitness.Log;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common.Interfaces;
 
-namespace PIFitness.Domain
+namespace PIFitness.Common
 {
     public class ElementWriter : IElementWriter
     {

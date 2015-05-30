@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
-namespace PIFitness.AFSync
+using PIFitness.Common;
+
+namespace PIFitness.Entities
 {
     public class UserDbContext : DbContext
     {

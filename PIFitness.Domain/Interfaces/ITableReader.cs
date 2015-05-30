@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
 
-namespace PIFitness.Domain.Interfaces
+namespace PIFitness.Common.Interfaces
 {
     public interface ITableReader<T>
     {

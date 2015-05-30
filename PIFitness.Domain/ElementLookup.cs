@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 
-namespace PIFitness.Domain
+namespace PIFitness.Common
 {
     public class ElementLookup
     {

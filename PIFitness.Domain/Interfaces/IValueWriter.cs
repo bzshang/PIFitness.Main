@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using OSIsoft.AF.Asset;
 
-namespace PIFitness.Domain.Interfaces
+namespace PIFitness.Common.Interfaces
 {
     public interface IValueWriter
     {

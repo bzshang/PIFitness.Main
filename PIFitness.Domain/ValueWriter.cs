@@ -8,9 +8,9 @@ using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.Data;
 
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common.Interfaces;
 
-namespace PIFitness.Domain
+namespace PIFitness.Common
 {
     public class ValueWriter : IValueWriter
     {

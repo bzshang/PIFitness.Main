@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 using PIFitness.Log;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common.Interfaces;
 
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
@@ -14,7 +14,7 @@ using OSIsoft.AF.Time;
 using OSIsoft.AF.Data;
 using OSIsoft.AF.EventFrame;
 
-namespace PIFitness.Domain
+namespace PIFitness.Common
 {
     public class AFAccess : IAFAccess
     {
@@ -34,9 +34,11 @@ namespace PIFitness.Domain
             return element;
         }
 
-        public void CreateUserElement(string userName, string id, AFElementTemplate template)
+        public void TryCreateUserElement(string userName, string id, AFElementTemplate template)
         {
             _db.Refresh();
+
+            PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Checking if AF Element exists for user {0}", userName));
             AFElement userElement = _db.Elements[userName];
 
             if (userElement == null)

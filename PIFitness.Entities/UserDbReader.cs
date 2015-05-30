@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using PIFitness.Domain;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common;
+using PIFitness.Common.Interfaces;
 
-namespace PIFitness.AFSync
+namespace PIFitness.Entities
 {
     public class UserDbReader : ITableReader<UserEntry>
     {

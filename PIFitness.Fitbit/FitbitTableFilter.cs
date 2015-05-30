@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 using PIFitness.Entities;
 using PIFitness.Common.Interfaces;
 
-namespace PIFitness.UserSync
+namespace PIFitness.Fitbit
 {
-    public class UserTableFilter : ITableFilter<UserEntry>
+    public class FitbitTableFilter : ITableFilter<UserEntry>
     {
 
         public IQueryable<UserEntry> FilterTable(IQueryable<UserEntry> table)
         {
             var filteredTable = from user in table
+                                where user.FitbitAuthToken != null &&
+                                      user.FitbitAuthTokenSecret != null
                                 select user;
-
+                                
             return filteredTable;
         }
 

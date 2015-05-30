@@ -88,6 +88,10 @@
       <Project>{ae5fff8c-292b-4e80-bc60-c453245bae44}</Project>
       <Name>PIFitness.Factories</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIFitness.Fitbit\PIFitness.Fitbit.csproj">
+      <Project>{af1453bb-932f-4d54-8285-1db20025e3f5}</Project>
+      <Name>PIFitness.Fitbit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIFitness.GPX\PIFitness.GPX.csproj">
       <Project>{22f26166-95c5-43a2-9e6a-f8fdb7fd6ad0}</Project>
       <Name>PIFitness.GPX</Name>

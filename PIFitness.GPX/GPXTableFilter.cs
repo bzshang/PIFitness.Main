@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using PIFitness.Domain.Interfaces;
+using PIFitness.Entities;
+using PIFitness.Common.Interfaces;
 
 namespace PIFitness.GPX
 {

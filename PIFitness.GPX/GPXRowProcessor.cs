@@ -10,9 +10,9 @@ using System.Diagnostics;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.Time;
 
+using PIFitness.Entities;
 using PIFitness.Log;
-using PIFitness.Domain;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common.Interfaces;
 using PIFitness.GPX.Interfaces;
 
 namespace PIFitness.GPX
@@ -20,11 +20,11 @@ namespace PIFitness.GPX
     public class GPXRowProcessor : IGPXRowProcessor
     {
 
-        private IElementWriter _elementWriter;
+        private IAFAccess _afAccess;
 
-        public GPXRowProcessor(IElementWriter elementWriter)
+        public GPXRowProcessor(IAFAccess afAccess)
         {
-            _elementWriter = elementWriter;
+            _afAccess = afAccess;
         }
 
         public RouteInfo ProcessRow(GPXEntry row)
@@ -85,7 +85,7 @@ namespace PIFitness.GPX
             {
                 if (gpxObj == null)
                 {
-                    PIFitnessLog.Write(TraceEventType.Information, 0, "GpxObj is null");
+                    PIFitnessLog.Write(TraceEventType.Warning, 0, "GpxObj is null");
                     return activityName;
                 }
             
@@ -94,7 +94,7 @@ namespace PIFitness.GPX
                 // find split in string and separate into name and date of activity
                 if (temp == null)
                 {
-                    PIFitnessLog.Write(TraceEventType.Information, 0, "Activity name is null");
+                    PIFitnessLog.Write(TraceEventType.Warning, 0, "Activity name is null");
                     return activityName;
                 }
                 
@@ -110,7 +110,7 @@ namespace PIFitness.GPX
                 string creator = gpxObj.creator;
                 if (creator == null)
                 {
-                    PIFitnessLog.Write(TraceEventType.Information, 0, "Gpx creator element is null");
+                    PIFitnessLog.Write(TraceEventType.Warning, 0, "Gpx creator element is null");
                     return activityName;
                 }
                 
@@ -127,7 +127,7 @@ namespace PIFitness.GPX
             }
             catch (Exception ex)
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, ex);
+                PIFitnessLog.Write(TraceEventType.Error, 0, ex);
                 return "Route";
             }
 
@@ -150,7 +150,7 @@ namespace PIFitness.GPX
             }
             catch (Exception ex)
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, ex);
+                PIFitnessLog.Write(TraceEventType.Error, 0, ex);
                 return null;
             }
 
@@ -158,14 +158,14 @@ namespace PIFitness.GPX
 
         private AFElement GetElementFromGuid(string id)
         {
-            AFElement element = _elementWriter.GetElementFromGuid(id);
+            AFElement element = _afAccess.GetElementFromGuid(id);
             if (element != null)
             {
                 return element;
             }
             else
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Could not find AF element for user {0}", id));
+                PIFitnessLog.Write(TraceEventType.Warning, 0, string.Format("Could not find AF element for user {0}", id));
                 return null;
             }
         }
@@ -174,7 +174,7 @@ namespace PIFitness.GPX
         { 
             if (element == null)
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, "AF Element is null");
+                PIFitnessLog.Write(TraceEventType.Warning, 0, "AF Element is null");
                 return null;
             }
             try
@@ -242,7 +242,7 @@ namespace PIFitness.GPX
             }
             catch (Exception ex)
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, ex);
+                PIFitnessLog.Write(TraceEventType.Error, 0, ex);
                 return null;
             }
 

@@ -12,8 +12,9 @@ using OSIsoft.AF.Asset;
 using OSIsoft.AF.Time;
 
 using PIFitness.Log;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common.Interfaces;
 using PIFitness.GPX.Interfaces;
+using PIFitness.Entities;
 
 namespace PIFitness.GPX
 {
@@ -24,12 +25,6 @@ namespace PIFitness.GPX
         private IGPXRowProcessor _rowProcessor;
 
         private IAFAccess _afAccess;
-
-        //private IValueWriter _valueWriter;
-
-        //private IElementWriter _elementWriter;
-
-        //private IEventFrameWriter _efWriter;
 
         private ITableWriter<GPXEntry> _writer;
 
@@ -52,11 +47,8 @@ namespace PIFitness.GPX
             _reader = reader;
             _rowProcessor = rowProcessor;
             _afAccess = afAccess;
-            //_valueWriter = valueWriter;
-            //_efWriter = efWriter;
             _writer = writer;
             _template = gpxTemplate;
-            //_elementWriter = elementWriter;
             _efTemplate = efTemplate;
         }
 
@@ -65,7 +57,7 @@ namespace PIFitness.GPX
             var table = GetTable();
             if (table == null)
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, "GPX table was null");
+                PIFitnessLog.Write(TraceEventType.Warning, 0, "GPX table was null");
                 return;
             }
 
@@ -94,7 +86,7 @@ namespace PIFitness.GPX
                 }
                 catch (Exception ex)
                 {
-                    PIFitnessLog.Write(TraceEventType.Information, 0, ex);
+                    PIFitnessLog.Write(TraceEventType.Error, 0, ex);
                 }
             }
             //});

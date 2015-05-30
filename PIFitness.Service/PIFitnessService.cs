@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 using System.Configuration;
 
 using PIFitness.Log;
-using PIFitness.AFSync;
-using PIFitness.Domain.Interfaces;
+using PIFitness.UserSync;
+using PIFitness.Common.Interfaces;
 using PIFitness.GPX;
 using PIFitness.Factories.Modules;
+using PIFitness.Fitbit;
 
 using OSIsoft.AF;
 
@@ -40,14 +41,16 @@ namespace PIFitness.Service
             PIFitnessLog.ConfigureLogging();
             PIFitnessLog.Write(TraceEventType.Information, 0, "PI Fitness Service is starting");
 
-            IKernel kernel = new StandardKernel(new UserSyncModule(), new GpxModule(), new CommonModule());
+            IKernel kernel = new StandardKernel(new UserSyncModule(), new GpxModule(), new FitbitModule(), new CommonModule());
 
             IFitnessProcessor afSyncProcessor = kernel.Get<UserSyncProcessor>();
+            IFitnessProcessor fitbitProcessor = kernel.Get<FitbitProcessor>();
             IFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();      
 
             _serviceWorker = kernel.Get<ServiceWorker>();
             _serviceWorker.AddProcessor(afSyncProcessor);
-            _serviceWorker.AddProcessor(gpxProcessor);
+            _serviceWorker.AddProcessor(fitbitProcessor);
+            //_serviceWorker.AddProcessor(gpxProcessor);
 
             BeginOperation();
         }

@@ -8,8 +8,8 @@ using Ninject.Activation;
 using Ninject;
 using Ninject.Modules;
 
-using PIFitness.Domain;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Common;
+using PIFitness.Common.Interfaces;
 using PIFitness.GPX;
 
 using OSIsoft.AF;
@@ -32,11 +32,11 @@ namespace PIFitness.Factories.Modules
             Bind<IAFAccess>().To<AFAccess>().InSingletonScope();
 
 
-            Bind<IValueWriter>().To<ValueWriter>().InSingletonScope(); 
-            Bind<IElementWriter>().To<ElementWriter>().InSingletonScope();
-            Bind<IEventFrameWriter>().To<EventFrameWriter>().InSingletonScope();
+            //Bind<IValueWriter>().To<ValueWriter>().InSingletonScope(); 
+            //Bind<IElementWriter>().To<ElementWriter>().InSingletonScope();
+            //Bind<IEventFrameWriter>().To<EventFrameWriter>().InSingletonScope();
 
-            Bind<ElementLookup>().ToSelf().InSingletonScope();
+            //Bind<ElementLookup>().ToSelf().InSingletonScope();
 
             Bind<AFDatabase>().ToMethod(context => AFFactory.GetAFDatabase()).InSingletonScope();
 

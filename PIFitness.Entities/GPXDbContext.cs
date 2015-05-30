@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
-namespace PIFitness.GPX
+namespace PIFitness.Entities
 {
     public class GPXDbContext : DbContext
     {

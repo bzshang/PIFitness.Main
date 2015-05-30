@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIFitness.AFSync
+using PIFitness.Common;
+
+namespace PIFitness.Entities
 {
     public class UserRepository
     {

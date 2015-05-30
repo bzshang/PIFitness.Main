@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 using Ninject.Modules;
 
-using PIFitness.Domain;
-using PIFitness.Domain.Interfaces;
+using PIFitness.Entities;
+using PIFitness.Common.Interfaces;
 using PIFitness.GPX;
 using PIFitness.GPX.Interfaces;
 
@@ -22,7 +22,9 @@ namespace PIFitness.Factories.Modules
             Bind<ITableFilter<GPXEntry>>().To<GPXTableFilter>();
             Bind<ITableWriter<GPXEntry>>().To<GPXTableWriter>();
             Bind<ITableReader<GPXEntry>>().To<GPXTableReader>();
-            Bind<IGPXEFWriter>().To<GPXEFWriter>();
+            //Bind<IGPXEFWriter>().To<GPXEFWriter>();
+
+                    
 
 
 

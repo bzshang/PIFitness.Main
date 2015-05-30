@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.GPX", "PIFitness.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.UserSync", "PIFitness.AFSync\PIFitness.UserSync.csproj", "{B949A5F2-364F-4151-ADE9-19BAC07D8516}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Fitbit", "PIFitness.Fitbit\PIFitness.Fitbit.csproj", "{AF1453BB-932F-4D54-8285-1DB20025E3F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIFitness.Entities", "PIFitness.Entities\PIFitness.Entities.csproj", "{957E64FC-D02E-4A9F-8876-341BACCAC780}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{B949A5F2-364F-4151-ADE9-19BAC07D8516}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B949A5F2-364F-4151-ADE9-19BAC07D8516}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B949A5F2-364F-4151-ADE9-19BAC07D8516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF1453BB-932F-4D54-8285-1DB20025E3F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF1453BB-932F-4D54-8285-1DB20025E3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF1453BB-932F-4D54-8285-1DB20025E3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF1453BB-932F-4D54-8285-1DB20025E3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957E64FC-D02E-4A9F-8876-341BACCAC780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957E64FC-D02E-4A9F-8876-341BACCAC780}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957E64FC-D02E-4A9F-8876-341BACCAC780}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957E64FC-D02E-4A9F-8876-341BACCAC780}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

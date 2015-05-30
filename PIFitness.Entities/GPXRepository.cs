@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIFitness.GPX
+namespace PIFitness.Entities
 {
     public class GPXRepository
     {

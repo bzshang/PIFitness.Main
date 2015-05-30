@@ -5,16 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OSIsoft.AF.Asset;
-using PIFitness.Domain;
-using PIFitness.Domain.Interfaces;
+
+using PIFitness.Entities;
+using PIFitness.Common.Interfaces;
 
 namespace PIFitness.GPX
 {
     public class GPXTableWriter : ITableWriter<GPXEntry>
     {
         private GPXRepository _gpxRepository;
-
-        private object _lockObject = new object();
 
         public GPXTableWriter(GPXRepository gpxRepository)
         {
@@ -23,10 +22,8 @@ namespace PIFitness.GPX
 
         public void UpdateRow(GPXEntry row)
         {
-            //lock (_lockObject)
-            //{
-                _gpxRepository.SaveSettings(row);
-            //}
+            _gpxRepository.SaveSettings(row);
+            
         }
 
 

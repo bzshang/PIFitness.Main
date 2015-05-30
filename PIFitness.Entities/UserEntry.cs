@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace PIFitness.AFSync
+namespace PIFitness.Entities
 {
     [Table("AspNetUsers")]
     public class UserEntry

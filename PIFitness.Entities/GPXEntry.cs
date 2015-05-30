@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace PIFitness.GPX
+namespace PIFitness.Entities
 {
     [Table("RunKeepers")]
     public class GPXEntry
