@@ -37,10 +37,7 @@ namespace PIFitness.GPX
         public GPXProcessor(ITableReader<GPXEntry> reader, 
             IGPXRowProcessor rowProcessor,
             IAFAccess afAccess,
-            //IValueWriter valueWriter,
-            //IEventFrameWriter efWriter,
             ITableWriter<GPXEntry> writer,
-            //IElementWriter elementWriter,
             [Named("GpxElement")] AFElementTemplate gpxTemplate,
             [Named("GpxEventFrame")] AFElementTemplate efTemplate)
         {
@@ -77,10 +74,7 @@ namespace PIFitness.GPX
                     {
                         bool bUpdatedValues = UpdateValues(routeInfo.Values);
                         bool bCreatedEF = CreateEventFrame(routeInfo);
-                        if (bUpdatedValues && bCreatedEF)
-                        {
-                            SetRowProcessed(row);
-                        }
+                        if (bUpdatedValues && bCreatedEF) SetRowProcessed(row);
                     }
 
                 }
@@ -100,7 +94,7 @@ namespace PIFitness.GPX
 
         private void CreateFitnessElement(string userName, string elementName, AFElementTemplate template)
         {
-            _afAccess.CreateFitnessElement(userName, elementName, template);
+            _afAccess.TryCreateFitnessElement(userName, elementName, template);
         }
 
         private IQueryable<GPXEntry> GetTable()

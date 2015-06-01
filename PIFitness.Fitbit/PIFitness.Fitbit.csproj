@@ -63,10 +63,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FitbitValuesConverter.cs" />
     <Compile Include="FitbitProcessor.cs" />
+    <Compile Include="FitbitStream.cs" />
+    <Compile Include="FitbitStreamFactory.cs" />
+    <Compile Include="FitbitStreams.cs" />
     <Compile Include="FitbitTableFilter.cs" />
     <Compile Include="FitbitTableReader.cs" />
-    <Compile Include="IFitbitClientFactory.cs" />
+    <Compile Include="FitbitUser.cs" />
+    <Compile Include="IFitbitUserFactory.cs" />
+    <Compile Include="IFitbitStreamFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

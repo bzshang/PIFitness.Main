@@ -17,6 +17,7 @@ using PIFitness.Entities;
 using PIFitness.Common.Interfaces;
 
 using Fitbit.Api;
+using Fitbit.Models;
 
 namespace PIFitness.Fitbit
 {
@@ -27,72 +28,170 @@ namespace PIFitness.Fitbit
 
         private ITableReader<UserEntry> _reader;
 
-        private IFitbitClientFactory _fitbitClientFactory;
+        private IFitbitUserFactory _fitbitUserFactory;
 
-        private Dictionary<string, FitbitClient> _fitbitClientCache;
+        private Dictionary<string, FitbitUser> _fitbitUserCache;
 
         private const string FITNESS_ELEMENT_NAME = "Fitbit";
 
         private AFElementTemplate _template;
 
-        public FitbitProcessor(IAFAccess afAccess,
+        private FitbitStreams _fitbitStreams;
+
+        private FitbitValuesConverter _fitbitConverter;
+
+        private readonly DateTime _startTime = DateTime.Now.AddDays(-30);
+        private readonly DateTime _endTime = DateTime.Now;
+
+        public FitbitProcessor(
+            IAFAccess afAccess,
             ITableReader<UserEntry> reader, 
-            IFitbitClientFactory fitbitClientFactory,
-            Dictionary<string, FitbitClient> fitbitClientCache,
+            IFitbitUserFactory fitbitUserFactory,
+            Dictionary<string, FitbitUser> fitbitUserCache,
+            FitbitStreams fitbitStreams,
+            FitbitValuesConverter fitbitConverter,
             [Named("FitbitElement")] AFElementTemplate elementTemplate)
         {
             _afAccess = afAccess;
             _reader = reader;
-            _fitbitClientFactory = fitbitClientFactory;
-            _fitbitClientCache = fitbitClientCache;
+            _fitbitUserFactory = fitbitUserFactory;
+            _fitbitUserCache = fitbitUserCache;
             _template = elementTemplate;
+            _fitbitStreams = fitbitStreams;
+            _fitbitConverter = fitbitConverter;
         }
 
         public void Process()
         {
-            var fitbitUsers = _reader.Read();
+            var userEntries = _reader.Read();
 
-            foreach (var fitbitUser in fitbitUsers)
+            foreach (var userEntry in userEntries)
             {
-                CreateFitnessElement(fitbitUser.UserName, FITNESS_ELEMENT_NAME, _template);
+                TryCreateFitnessElement(userEntry.UserName, FITNESS_ELEMENT_NAME, _template);
 
-                UpdateCache(fitbitUser);
+                FitbitUser fitbitUser = GetFitbitUser(userEntry);
+
+                IList<AFValues> valsList = GetFitbitData(fitbitUser);
+
+                _afAccess.UpdateValues(valsList);
             }
 
-            GetFitbitData(_fitbitClientCache);
-             
-
-
 
         }
 
-        private void GetFitbitData(IDictionary<string, FitbitClient> fitbitClientCache)
+        private void TryCreateFitnessElement(string userName, string elementName, AFElementTemplate template)
         {
-
-            PIFitnessLog.Write(TraceEventType.Information, 0, "Finished getting Fitbit data");
+            _afAccess.TryCreateFitnessElement(userName, elementName, template);
         }
 
-        private void CreateFitnessElement(string userName, string elementName, AFElementTemplate template)
+        private IList<AFValues> GetFitbitData(FitbitUser fitbitUser)
         {
-            _afAccess.CreateFitnessElement(userName, elementName, template);
-        }
-
-        private void UpdateCache(UserEntry fitbitUser)
-        {
-
-            string userName = fitbitUser.UserName;
-            if (!_fitbitClientCache.ContainsKey(userName))
+            IList<AFValues> valsList = new List<AFValues>();
+            foreach (var stream in _fitbitStreams)
             {
-                _fitbitClientCache[userName] = _fitbitClientFactory.CreateFitbitClient(
-                                                        ConfigurationManager.AppSettings["fitbitConsumerKey"],
-                                                        ConfigurationManager.AppSettings["fitbitConsumerSecret"],
-                                                        fitbitUser.FitbitAuthToken,
-                                                        fitbitUser.FitbitAuthTokenSecret);
+                AFValues vals = GetFitbitDataForStream(stream, fitbitUser);
+                valsList.Add(vals);
 
+            }
+
+            //get calculated attributes
+            AFValues activeHours = GetActiveHours(valsList, fitbitUser);
+            valsList.Add(activeHours);
+
+            return valsList;
+
+        }
+
+        private AFValues GetFitbitDataForStream(FitbitStream stream, FitbitUser fitbitUser)
+        {
+            TimeSeriesDataList internalDataList = fitbitUser.ApiClient.GetTimeSeries(stream.FitbitSource, _startTime, _endTime);
+
+            AFValues vals = _fitbitConverter.ConvertToAFValues(internalDataList, stream, fitbitUser);
+
+            return vals;
+
+        }
+
+        private AFValues GetActiveHours(IList<AFValues> valsList, FitbitUser fitbitUser)
+        {
+            try
+            {
+                IEnumerable<AFValues> filteredValues = from vals in valsList
+                                                       where vals != null
+                                                       select vals;
+
+                AFValues veryActiveValues = QueryAFValuesByName(filteredValues, "Minutes very active");
+                AFValues fairlyActiveValues = QueryAFValuesByName(filteredValues, "Minutes fairly active");
+                AFValues lightlyActiveValues = QueryAFValuesByName(filteredValues, "Minutes lightly active");
+
+                var combined = from valsActive in veryActiveValues
+                               join valsFairly in fairlyActiveValues on valsActive.Timestamp equals valsFairly.Timestamp
+                               join valsLightly in lightlyActiveValues on valsFairly.Timestamp equals valsLightly.Timestamp
+                               select new AFValue((Convert.ToSingle(valsActive.Value) +
+                                   Convert.ToSingle(valsFairly.Value) +
+                                   Convert.ToSingle(valsLightly.Value)) / 60,
+                                   valsActive.Timestamp);
+
+                AFValues values = new AFValues();
+                foreach (var val in combined)
+                {
+                    values.Add(val);
+                }
+
+                values.Attribute = fitbitUser.UserElement.Elements["Fitbit"].Attributes["Active hours"];
+                return values;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+        private AFValues QueryAFValuesByName(IEnumerable<AFValues> filteredValues, string attributeName)
+        {
+            AFValues valResult = (from vals in filteredValues
+             where vals.Attribute.Name == attributeName
+             select vals).FirstOrDefault();
+
+            return valResult;
+        }
+
+        private FitbitUser GetFitbitUser(UserEntry userEntry)
+        {
+            string userName = userEntry.UserName;
+
+            FitbitUser fitbitUser = null;
+            _fitbitUserCache.TryGetValue(userName, out fitbitUser);
+
+            if (fitbitUser == null)
+            {
+                fitbitUser = CreateFitbitUser(userEntry);
+                
+                if (fitbitUser == null)
+                {
+                    PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Unable to create FitbitUser for {0}", userName));
+                    return null;
+                }
+
+                _fitbitUserCache[userName] = fitbitUser;
                 PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Added {0} to FitbitClient cache", userName));
             }
 
-            
+            return fitbitUser;
+        }
+
+        private FitbitUser CreateFitbitUser(UserEntry userEntry)
+        {
+            AFElement userElement = _afAccess.GetElementFromName(userEntry.UserName);
+
+            if (userElement == null) return null;
+
+            return _fitbitUserFactory.CreateFitbitUser(ConfigurationManager.AppSettings["fitbitConsumerKey"],
+                                                       ConfigurationManager.AppSettings["fitbitConsumerSecret"],
+                                                       userEntry.FitbitAuthToken,
+                                                       userEntry.FitbitAuthTokenSecret,
+                                                       userElement);
         }
 
     }

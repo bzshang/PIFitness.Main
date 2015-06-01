@@ -7,7 +7,7 @@
     <ProjectGuid>{8311AB75-6203-4BB7-A3D1-CEF092285323}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PIFitness.Domain</RootNamespace>
+    <RootNamespace>PIFitness.Common</RootNamespace>
     <AssemblyName>PIFitness.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AFAccess.cs" />
+    <Compile Include="AFUOMs.cs" />
     <Compile Include="ElementLookup.cs" />
     <Compile Include="EventFrameWriter.cs" />
     <Compile Include="Interfaces\IAFAccess.cs" />

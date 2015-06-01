@@ -8,6 +8,7 @@ using System.Configuration;
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.EventFrame;
+using OSIsoft.AF.UnitsOfMeasure;
 
 namespace PIFitness.Factories
 {
@@ -20,14 +21,6 @@ namespace PIFitness.Factories
         private static string gpxElementTemplate = ConfigurationManager.AppSettings["GPX Element Template"];
         private static string fitbitElementTemplate = ConfigurationManager.AppSettings["Fitbit Element Template"];
         private static string gpxEfTemplate = ConfigurationManager.AppSettings["GPX Event Frame Template"];
-
-        private static Dictionary<TemplateType, string> templateLookup = new Dictionary<TemplateType, string>()
-        {
-            { TemplateType.UserElement, userElementTemplate },
-            { TemplateType.GPXElement, gpxElementTemplate },
-            { TemplateType.FitbitElement, fitbitElementTemplate },
-            { TemplateType.GPXEventFrame, gpxEfTemplate }
-        };    
 
         public static AFDatabase GetAFDatabase()
         {
@@ -46,6 +39,20 @@ namespace PIFitness.Factories
                 template.InstanceType = typeof(AFElement);
             }
             return template;
+        }
+
+        private static Dictionary<TemplateType, string> templateLookup = new Dictionary<TemplateType, string>()
+        {
+            { TemplateType.UserElement, userElementTemplate },
+            { TemplateType.GPXElement, gpxElementTemplate },
+            { TemplateType.FitbitElement, fitbitElementTemplate },
+            { TemplateType.GPXEventFrame, gpxEfTemplate }
+        };
+
+        public static UOMs GetUOMs()
+        {
+            return new PISystems()[piSystem].UOMDatabase.UOMs;
+
         }
 
     }

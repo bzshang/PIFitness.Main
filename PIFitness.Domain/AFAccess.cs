@@ -34,6 +34,15 @@ namespace PIFitness.Common
             return element;
         }
 
+        public AFElement GetElementFromName(string name)
+        {
+            AFElement element = null;
+
+            element = _db.Elements[name];
+
+            return element;
+        }
+
         public void TryCreateUserElement(string userName, string id, AFElementTemplate template)
         {
             _db.Refresh();
@@ -53,7 +62,7 @@ namespace PIFitness.Common
             }
         }
 
-        public void CreateFitnessElement(string userName, string elementName, AFElementTemplate template)
+        public void TryCreateFitnessElement(string userName, string elementName, AFElementTemplate template)
         {
             _db.Refresh();
             AFElement userElement = _db.Elements[userName];

@@ -13,9 +13,11 @@ namespace PIFitness.Common.Interfaces
     {
         void TryCreateUserElement(string userName, string id, AFElementTemplate template);
 
-        void CreateFitnessElement(string userName, string elementName, AFElementTemplate template);
+        void TryCreateFitnessElement(string userName, string elementName, AFElementTemplate template);
 
         AFElement GetElementFromGuid(string id);
+
+        AFElement GetElementFromName(string name);
 
         bool CreateEventFrame(string name, AFTime start, AFTime end, AFElement primaryReferencedElement, AFElementTemplate efTemplate);
 

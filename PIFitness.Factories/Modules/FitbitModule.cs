@@ -18,12 +18,18 @@ namespace PIFitness.Factories.Modules
     {
         public override void Load()
         {
-            Bind<IFitbitClientFactory>().ToFactory();
+            Bind<IFitbitUserFactory>().ToFactory();
 
             Bind<ITableFilter<UserEntry>>().To<FitbitTableFilter>().WhenInjectedInto(typeof(FitbitTableReader)); 
             Bind<ITableReader<UserEntry>>().To<FitbitTableReader>().WhenInjectedInto(typeof(FitbitProcessor));
 
             Bind<Dictionary<string, FitbitClient>>().ToSelf().InSingletonScope();
+
+            Bind<FitbitStreams>().ToSelf().InSingletonScope();
+
+            Bind<IFitbitStreamFactory>().To<FitbitStreamFactory>().InSingletonScope();
+
+            Bind<FitbitValuesConverter>().ToSelf().InSingletonScope();
 
         }
     }

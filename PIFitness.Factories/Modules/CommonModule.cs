@@ -14,6 +14,7 @@ using PIFitness.GPX;
 
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
+using OSIsoft.AF.UnitsOfMeasure;
 
 namespace PIFitness.Factories.Modules
 {
@@ -48,6 +49,8 @@ namespace PIFitness.Factories.Modules
                 AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXElement)).InSingletonScope().Named("GpxElement");
             Bind<AFElementTemplate>().ToMethod(context =>
                 AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXEventFrame)).InSingletonScope().Named("GpxEventFrame");
+
+            Bind<UOMs>().ToMethod(context => AFFactory.GetUOMs()).InSingletonScope();
         }
 
 
