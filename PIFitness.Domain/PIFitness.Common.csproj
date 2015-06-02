@@ -67,6 +67,7 @@
     <Compile Include="Interfaces\ITableWriter.cs" />
     <Compile Include="Interfaces\IValueWriter.cs" />
     <Compile Include="ElementWriter.cs" />
+    <Compile Include="PollType.cs" />
     <Compile Include="ValueWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

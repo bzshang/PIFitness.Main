@@ -12,8 +12,9 @@ using OSIsoft.AF.UnitsOfMeasure;
 
 namespace PIFitness.Factories
 {
-    public static class AFFactory
+    public class AFFactory
     {
+
         private static string piSystem = ConfigurationManager.AppSettings["PISystem"];
         private static string afDatabase = ConfigurationManager.AppSettings["AFDatabase"];
 
@@ -22,12 +23,28 @@ namespace PIFitness.Factories
         private static string fitbitElementTemplate = ConfigurationManager.AppSettings["Fitbit Element Template"];
         private static string gpxEfTemplate = ConfigurationManager.AppSettings["GPX Event Frame Template"];
 
-        public static AFDatabase GetAFDatabase()
+        private static Dictionary<TemplateType, string> templateLookup = new Dictionary<TemplateType, string>()
         {
+            { TemplateType.UserElement, userElementTemplate },
+            { TemplateType.GPXElement, gpxElementTemplate },
+            { TemplateType.FitbitElement, fitbitElementTemplate },
+            { TemplateType.GPXEventFrame, gpxEfTemplate }
+        };
+
+
+        public AFDatabase GetAFDatabase()
+        {
+            //return ps.Databases[afDatabaseName];
             return new PISystems()[piSystem].Databases[afDatabase];
         }
 
-        public static AFElementTemplate GetTemplate(AFDatabase database, TemplateType templateType)
+        public UOMs GetUOMs()
+        {
+            return new PISystems()[piSystem].UOMDatabase.UOMs;
+
+        }
+
+        public AFElementTemplate GetTemplate(AFDatabase database, TemplateType templateType)
         {
             AFElementTemplate template = database.ElementTemplates[templateLookup[templateType]];
             if (templateType == TemplateType.GPXEventFrame)
@@ -39,20 +56,6 @@ namespace PIFitness.Factories
                 template.InstanceType = typeof(AFElement);
             }
             return template;
-        }
-
-        private static Dictionary<TemplateType, string> templateLookup = new Dictionary<TemplateType, string>()
-        {
-            { TemplateType.UserElement, userElementTemplate },
-            { TemplateType.GPXElement, gpxElementTemplate },
-            { TemplateType.FitbitElement, fitbitElementTemplate },
-            { TemplateType.GPXEventFrame, gpxEfTemplate }
-        };
-
-        public static UOMs GetUOMs()
-        {
-            return new PISystems()[piSystem].UOMDatabase.UOMs;
-
         }
 
     }

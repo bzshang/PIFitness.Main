@@ -11,6 +11,8 @@ using Ninject.Modules;
 using PIFitness.Common;
 using PIFitness.Common.Interfaces;
 using PIFitness.GPX;
+using PIFitness.Fitbit;
+using PIFitness.UserSync;
 
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
@@ -20,18 +22,17 @@ namespace PIFitness.Factories.Modules
 {
     public class CommonModule : NinjectModule
     {
-        //private AFDatabase _db;
+        private AFFactory _afFactory;
 
-        //public DomainModule(AFDatabase db)
-        //{
-        //    _db = db;
-        //}
+        public CommonModule(AFFactory afFactory)
+        {
+            _afFactory = afFactory;
+        }
 
 
         public override void Load()
         {
             Bind<IAFAccess>().To<AFAccess>().InSingletonScope();
-
 
             //Bind<IValueWriter>().To<ValueWriter>().InSingletonScope(); 
             //Bind<IElementWriter>().To<ElementWriter>().InSingletonScope();
@@ -39,18 +40,19 @@ namespace PIFitness.Factories.Modules
 
             //Bind<ElementLookup>().ToSelf().InSingletonScope();
 
-            Bind<AFDatabase>().ToMethod(context => AFFactory.GetAFDatabase()).InSingletonScope();
+            Bind<AFDatabase>().ToMethod(context => _afFactory.GetAFDatabase()).InSingletonScope();
+            Bind<UOMs>().ToMethod(context => _afFactory.GetUOMs()).InSingletonScope();
 
-            Bind<AFElementTemplate>().ToMethod(context => 
-                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(),TemplateType.UserElement)).InSingletonScope().Named("UserElement");
             Bind<AFElementTemplate>().ToMethod(context =>
-                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.FitbitElement)).InSingletonScope().Named("FitbitElement");
+                _afFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.UserElement)).WhenInjectedInto(typeof(UserSyncProcessor)).InSingletonScope();//.Named("UserElement");
             Bind<AFElementTemplate>().ToMethod(context =>
-                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXElement)).InSingletonScope().Named("GpxElement");
+                _afFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.FitbitElement)).WhenInjectedInto(typeof(FitbitProcessor)).InSingletonScope();//.Named("FitbitElement");
             Bind<AFElementTemplate>().ToMethod(context =>
-                AFFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXEventFrame)).InSingletonScope().Named("GpxEventFrame");
+                _afFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXElement)).WhenInjectedInto(typeof(GPXProcessor)).Named("GpxElement");
+            Bind<AFElementTemplate>().ToMethod(context =>
+                _afFactory.GetTemplate(context.Kernel.Get<AFDatabase>(), TemplateType.GPXEventFrame)).WhenInjectedInto(typeof(GPXProcessor)).Named("GpxEventFrame");
 
-            Bind<UOMs>().ToMethod(context => AFFactory.GetUOMs()).InSingletonScope();
+
         }
 
 

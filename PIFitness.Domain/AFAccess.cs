@@ -129,6 +129,8 @@ namespace PIFitness.Common
         {
             IList<AFValue> valsToWrite = new List<AFValue>();
 
+            if (valsList.Any(i => i == null)) return false;
+
             valsToWrite = valsList.SelectMany(i => i).ToList();
 
             AFErrors<AFValue> errors = AFListData.UpdateValues(valsToWrite, AFUpdateOption.Replace);

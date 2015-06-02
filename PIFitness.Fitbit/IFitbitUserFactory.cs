@@ -15,6 +15,7 @@ namespace PIFitness.Fitbit
                                     string consumerSecret,
                                     string authToken,
                                     string authTokenSecret,
-                                    AFElement element);
+                                    AFElement element,
+                                    bool isNew);
     }
 }

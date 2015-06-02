@@ -16,14 +16,18 @@ namespace PIFitness.Fitbit
 
         public AFElement UserElement { get; set; }
 
+        public bool IsNew { get; set; }
+
         public FitbitUser(string consumerKey,
                           string consumerSecret,
                           string authToken,
                           string authTokenSecret,
-                          AFElement element)
+                          AFElement element,
+                          bool isNew)
         {
             ApiClient = new FitbitClient(consumerKey, consumerSecret, authToken, authTokenSecret);
             UserElement = element;
+            IsNew = isNew;
         }
 
 

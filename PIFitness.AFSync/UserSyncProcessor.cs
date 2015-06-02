@@ -25,7 +25,7 @@ namespace PIFitness.UserSync
 
         public UserSyncProcessor(ITableReader<UserEntry> reader, 
             IAFAccess afAccess,
-            [Named("UserElement")] AFElementTemplate userTemplate)
+            AFElementTemplate userTemplate)
         {
             _reader = reader;
             _afAccess = afAccess;

@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Diagnostics;
 
-using Ninject;
-
 using OSIsoft.AF;
 using OSIsoft.AF.Asset;
 using OSIsoft.AF.Time;
 
 using PIFitness.Log;
 using PIFitness.Entities;
+using PIFitness.Common;
 using PIFitness.Common.Interfaces;
 
 using Fitbit.Api;
@@ -40,6 +39,12 @@ namespace PIFitness.Fitbit
 
         private FitbitValuesConverter _fitbitConverter;
 
+        private const int POLL_MAX = 6;
+
+        private int _count;
+
+        private PollType _pollType;
+
         private readonly DateTime _startTime = DateTime.Now.AddDays(-30);
         private readonly DateTime _endTime = DateTime.Now;
 
@@ -50,7 +55,7 @@ namespace PIFitness.Fitbit
             Dictionary<string, FitbitUser> fitbitUserCache,
             FitbitStreams fitbitStreams,
             FitbitValuesConverter fitbitConverter,
-            [Named("FitbitElement")] AFElementTemplate elementTemplate)
+            AFElementTemplate elementTemplate)
         {
             _afAccess = afAccess;
             _reader = reader;
@@ -59,9 +64,21 @@ namespace PIFitness.Fitbit
             _template = elementTemplate;
             _fitbitStreams = fitbitStreams;
             _fitbitConverter = fitbitConverter;
+
+            _count = 0;
         }
 
         public void Process()
+        {
+            SetPollParameters();
+
+            UpdateFitbitUserCache();
+
+            ProcessFitbitUserCache();
+
+        }
+
+        private void UpdateFitbitUserCache()
         {
             var userEntries = _reader.Read();
 
@@ -69,14 +86,41 @@ namespace PIFitness.Fitbit
             {
                 TryCreateFitnessElement(userEntry.UserName, FITNESS_ELEMENT_NAME, _template);
 
-                FitbitUser fitbitUser = GetFitbitUser(userEntry);
+                TryAddFitbitUserToCache(userEntry);
+            }
+        }
 
-                IList<AFValues> valsList = GetFitbitData(fitbitUser);
+        private void ProcessFitbitUserCache()
+        { 
 
-                _afAccess.UpdateValues(valsList);
+            foreach (var fitbitUser in _fitbitUserCache.Values)
+            {
+                if (fitbitUser.IsNew || _pollType == PollType.UpdateAll)
+                {
+                    PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Retrieving Fitbit data for {0}", fitbitUser.UserElement.Name));
+
+                    fitbitUser.IsNew = false;
+
+                    IList<AFValues> valsList = GetFitbitData(fitbitUser);
+
+                    _afAccess.UpdateValues(valsList);
+                }
             }
 
+        }
 
+        private void SetPollParameters()
+        {
+            _count += 1;
+            if (_count == POLL_MAX)
+            {
+                _count = 0;
+                _pollType = PollType.UpdateAll;
+            }
+            else
+            {
+                _pollType = PollType.CheckNew;
+            }
         }
 
         private void TryCreateFitnessElement(string userName, string elementName, AFElementTemplate template)
@@ -104,11 +148,13 @@ namespace PIFitness.Fitbit
 
         private AFValues GetFitbitDataForStream(FitbitStream stream, FitbitUser fitbitUser)
         {
-            TimeSeriesDataList internalDataList = fitbitUser.ApiClient.GetTimeSeries(stream.FitbitSource, _startTime, _endTime);
+            //TimeSeriesDataList internalDataList = fitbitUser.ApiClient.GetTimeSeries(stream.FitbitSource, _startTime, _endTime);
 
-            AFValues vals = _fitbitConverter.ConvertToAFValues(internalDataList, stream, fitbitUser);
+            //AFValues vals = _fitbitConverter.ConvertToAFValues(internalDataList, stream, fitbitUser);
 
-            return vals;
+            //return vals;
+
+            return null;
 
         }
 
@@ -157,7 +203,7 @@ namespace PIFitness.Fitbit
             return valResult;
         }
 
-        private FitbitUser GetFitbitUser(UserEntry userEntry)
+        private void TryAddFitbitUserToCache(UserEntry userEntry)
         {
             string userName = userEntry.UserName;
 
@@ -171,14 +217,12 @@ namespace PIFitness.Fitbit
                 if (fitbitUser == null)
                 {
                     PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Unable to create FitbitUser for {0}", userName));
-                    return null;
                 }
 
                 _fitbitUserCache[userName] = fitbitUser;
                 PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Added {0} to FitbitClient cache", userName));
             }
 
-            return fitbitUser;
         }
 
         private FitbitUser CreateFitbitUser(UserEntry userEntry)
@@ -191,8 +235,11 @@ namespace PIFitness.Fitbit
                                                        ConfigurationManager.AppSettings["fitbitConsumerSecret"],
                                                        userEntry.FitbitAuthToken,
                                                        userEntry.FitbitAuthTokenSecret,
-                                                       userElement);
+                                                       userElement,
+                                                       true);
         }
 
     }
+
+    
 }
