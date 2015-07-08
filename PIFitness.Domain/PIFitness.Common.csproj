@@ -55,20 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AFAccess.cs" />
-    <Compile Include="AFUOMs.cs" />
-    <Compile Include="ElementLookup.cs" />
-    <Compile Include="EventFrameWriter.cs" />
     <Compile Include="Interfaces\IAFAccess.cs" />
-    <Compile Include="Interfaces\IEventFrameWriter.cs" />
-    <Compile Include="Interfaces\IElementWriter.cs" />
     <Compile Include="Interfaces\IFitnessProcessor.cs" />
     <Compile Include="Interfaces\ITableFilter.cs" />
     <Compile Include="Interfaces\ITableReader.cs" />
     <Compile Include="Interfaces\ITableWriter.cs" />
-    <Compile Include="Interfaces\IValueWriter.cs" />
-    <Compile Include="ElementWriter.cs" />
     <Compile Include="PollType.cs" />
-    <Compile Include="ValueWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

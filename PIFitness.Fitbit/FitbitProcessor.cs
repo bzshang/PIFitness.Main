@@ -39,14 +39,11 @@ namespace PIFitness.Fitbit
 
         private FitbitValuesConverter _fitbitConverter;
 
-        private const int POLL_MAX = 6;
+        private const int POLL_MAX = 60;
 
         private int _count;
 
         private PollType _pollType;
-
-        private readonly DateTime _startTime = DateTime.Now.AddDays(-30);
-        private readonly DateTime _endTime = DateTime.Now;
 
         public FitbitProcessor(
             IAFAccess afAccess,
@@ -91,19 +88,34 @@ namespace PIFitness.Fitbit
         }
 
         private void ProcessFitbitUserCache()
-        { 
-
+        {
+            //System.IO.File.WriteAllText(@"pifitness_vals.txt", string.Format("processing at {0}", DateTime.Now));
             foreach (var fitbitUser in _fitbitUserCache.Values)
             {
                 if (fitbitUser.IsNew || _pollType == PollType.UpdateAll)
                 {
-                    PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Retrieving Fitbit data for {0}", fitbitUser.UserElement.Name));
+                    PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Retrieving Fitbit data for {0}", fitbitUser.UserElement.Name));
 
                     fitbitUser.IsNew = false;
 
                     IList<AFValues> valsList = GetFitbitData(fitbitUser);
 
                     _afAccess.UpdateValues(valsList);
+
+                    ////System.IO.File.WriteAllText(@"pifitness_vals.txt", fitbitUser.UserElement.Name);
+                    //foreach (var vals in valsList)
+                    //{
+                    //    //System.IO.File.WriteAllText(@"pifitness_vals.txt", vals.Attribute.Name);
+
+                    //    foreach (var val in vals)
+                    //    {
+                    //        //System.IO.File.WriteAllText(@"pifitness_vals.txt", val.Value.ToString());
+                    //    }
+                        
+                    //}
+                    
+
+                    PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Updated {0} Fitbit streams for {1}", valsList.Count, fitbitUser.UserElement.Name));
                 }
             }
 
@@ -121,6 +133,7 @@ namespace PIFitness.Fitbit
             {
                 _pollType = PollType.CheckNew;
             }
+            PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Fitbit counter: {0}", _count));
         }
 
         private void TryCreateFitnessElement(string userName, string elementName, AFElementTemplate template)
@@ -130,10 +143,13 @@ namespace PIFitness.Fitbit
 
         private IList<AFValues> GetFitbitData(FitbitUser fitbitUser)
         {
+            DateTime startTime = DateTime.Now.AddDays(-30);
+            DateTime endTime = DateTime.Now;
+
             IList<AFValues> valsList = new List<AFValues>();
             foreach (var stream in _fitbitStreams)
             {
-                AFValues vals = GetFitbitDataForStream(stream, fitbitUser);
+                AFValues vals = GetFitbitDataForStream(stream, fitbitUser, startTime, endTime);
                 valsList.Add(vals);
 
             }
@@ -146,16 +162,16 @@ namespace PIFitness.Fitbit
 
         }
 
-        private AFValues GetFitbitDataForStream(FitbitStream stream, FitbitUser fitbitUser)
+        private AFValues GetFitbitDataForStream(FitbitStream stream, FitbitUser fitbitUser, DateTime startTime, DateTime endTime)
         {
-            //TimeSeriesDataList internalDataList = fitbitUser.ApiClient.GetTimeSeries(stream.FitbitSource, _startTime, _endTime);
 
-            //AFValues vals = _fitbitConverter.ConvertToAFValues(internalDataList, stream, fitbitUser);
+            TimeSeriesDataList internalDataList = fitbitUser.ApiClient.GetTimeSeries(stream.FitbitSource, startTime, endTime);
 
-            //return vals;
+            AFValues vals = _fitbitConverter.ConvertToAFValues(internalDataList, stream, fitbitUser);
 
-            return null;
+            return vals;
 
+            //return null;
         }
 
         private AFValues GetActiveHours(IList<AFValues> valsList, FitbitUser fitbitUser)

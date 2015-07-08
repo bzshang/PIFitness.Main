@@ -11,6 +11,7 @@ using Ninject.Modules;
 using Ninject.Extensions.Factory;
 
 using Fitbit.Api;
+using Fitbit.Models;
 
 namespace PIFitness.Factories.Modules
 {
@@ -28,8 +29,12 @@ namespace PIFitness.Factories.Modules
             Bind<FitbitStreams>().ToSelf().InSingletonScope();
 
             Bind<IFitbitStreamFactory>().To<FitbitStreamFactory>().InSingletonScope();
+            //Bind<IFitbitStreamFactory>().ToFactory();
+            Bind<TimeSeriesResourceType>().ToSelf();
 
             Bind<FitbitValuesConverter>().ToSelf().InSingletonScope();
+
+
 
         }
     }

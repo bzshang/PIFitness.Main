@@ -42,22 +42,30 @@ namespace PIFitness.Service
             PIFitnessLog.ConfigureLogging();
             PIFitnessLog.Write(TraceEventType.Information, 0, "PI Fitness Service is starting");
 
+            ComposeObjects();
+            BeginOperation();
+        }
+
+        /// <summary>
+        /// composition root
+        /// </summary>
+        private void ComposeObjects()
+        {
             IKernel kernel = new StandardKernel(
-                new UserSyncModule(), 
-                new GpxModule(), 
-                new FitbitModule(), 
+                new UserSyncModule(),
+                new GpxModule(),
+                new FitbitModule(),
                 new CommonModule(new AFFactory()));
 
-            IFitnessProcessor afSyncProcessor = kernel.Get<UserSyncProcessor>();
+            IFitnessProcessor userSyncProcessor = kernel.Get<UserSyncProcessor>();
             IFitnessProcessor fitbitProcessor = kernel.Get<FitbitProcessor>();
-            IFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();      
+            IFitnessProcessor gpxProcessor = kernel.Get<GPXProcessor>();
 
             _serviceWorker = kernel.Get<ServiceWorker>();
-            _serviceWorker.AddProcessor(afSyncProcessor);
+            _serviceWorker.AddProcessor(userSyncProcessor);
             _serviceWorker.AddProcessor(fitbitProcessor);
-            //_serviceWorker.AddProcessor(gpxProcessor);
+            _serviceWorker.AddProcessor(gpxProcessor);
 
-            BeginOperation();
         }
 
         private void BeginOperation()

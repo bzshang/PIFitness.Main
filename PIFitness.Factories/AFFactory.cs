@@ -12,6 +12,10 @@ using OSIsoft.AF.UnitsOfMeasure;
 
 namespace PIFitness.Factories
 {
+
+    /// <summary>
+    /// Wrapper class enabling Ninject to construct AF objects on-the-fly via delegate in Binding
+    /// </summary>
     public class AFFactory
     {
 
@@ -31,6 +35,14 @@ namespace PIFitness.Factories
             { TemplateType.GPXEventFrame, gpxEfTemplate }
         };
 
+        private Dictionary<string, object> _afFactoryCache;
+
+        //Not used
+        public AFFactory()
+        {
+            _afFactoryCache = new Dictionary<string, object>();
+        }
+
 
         public AFDatabase GetAFDatabase()
         {
@@ -44,8 +56,10 @@ namespace PIFitness.Factories
 
         }
 
-        public AFElementTemplate GetTemplate(AFDatabase database, TemplateType templateType)
+        public AFElementTemplate GetTemplate(TemplateType templateType)
         {
+
+            AFDatabase database = GetAFDatabase();
             AFElementTemplate template = database.ElementTemplates[templateLookup[templateType]];
             if (templateType == TemplateType.GPXEventFrame)
             {

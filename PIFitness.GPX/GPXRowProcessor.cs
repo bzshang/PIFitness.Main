@@ -45,7 +45,7 @@ namespace PIFitness.GPX
             }
             catch (Exception ex)
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, ex);
+                PIFitnessLog.Write(TraceEventType.Information, 0, ex.Message + " RowID: " + row.Id);
                 return null;
             }
         }
@@ -69,9 +69,9 @@ namespace PIFitness.GPX
                 {
                     return gpxActivity = (GpxType)mySerial.Deserialize(reader);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return null;
+                    throw new Exception("GPXObj is null");
                 }
 
             }
@@ -83,11 +83,7 @@ namespace PIFitness.GPX
             string activityName = "Route";
             try
             {
-                if (gpxObj == null)
-                {
-                    PIFitnessLog.Write(TraceEventType.Warning, 0, "GpxObj is null");
-                    return activityName;
-                }
+
             
                 string temp = gpxObj.trk[0].name;
 
@@ -181,9 +177,9 @@ namespace PIFitness.GPX
             { 
                 //update latitude, longitude, and elevation
 
-                AFAttribute elevationAttribute = element.Elements["GPX"].Attributes["Elevation"];
-                AFAttribute latitudeAttribute = element.Elements["GPX"].Attributes["Latitude"];
-                AFAttribute longitudeAttribute = element.Elements["GPX"].Attributes["Longitude"];
+                AFAttribute elevationAttribute = element.Elements["Routes"].Attributes["Elevation"];
+                AFAttribute latitudeAttribute = element.Elements["Routes"].Attributes["Latitude"];
+                AFAttribute longitudeAttribute = element.Elements["Routes"].Attributes["Longitude"];
 
                 AFValues listElevationValues = new AFValues();
                 AFValues listLatitudeValues = new AFValues();
@@ -199,7 +195,7 @@ namespace PIFitness.GPX
 
                 //now update the activity tag
 
-                AFAttribute rkActivityAttribute = element.Elements["GPX"].Attributes["Activity"];
+                AFAttribute rkActivityAttribute = element.Elements["Routes"].Attributes["Activity"];
 
                 DateTime temp_time = (from pt in wayPoints
                                       orderby pt.Time ascending

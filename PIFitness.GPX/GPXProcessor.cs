@@ -32,7 +32,7 @@ namespace PIFitness.GPX
 
         private AFElementTemplate _efTemplate;
 
-        private const string FITNESS_ELEMENT_NAME = "GPX";
+        private const string FITNESS_ELEMENT_NAME = "Routes";
 
         public GPXProcessor(ITableReader<GPXEntry> reader, 
             IGPXRowProcessor rowProcessor,
@@ -106,7 +106,7 @@ namespace PIFitness.GPX
 
         private RouteInfo ProcessRow(GPXEntry row)
         {
-            PIFitnessLog.Write(TraceEventType.Information, 0, 
+            PIFitnessLog.Write(TraceEventType.Verbose, 0, 
                 string.Format("Processing GPX for user {0}", row.UserName));
             
             RouteInfo tableRowInfo = _rowProcessor.ProcessRow(row);
@@ -127,7 +127,7 @@ namespace PIFitness.GPX
 
         private bool CreateEventFrame(RouteInfo routeInfo)
         {
-            AFElement element = routeInfo.Element.Elements["GPX"];
+            AFElement element = routeInfo.Element.Elements["Routes"];
             bool efExists = _afAccess.CheckEventFrameExists(element, routeInfo.UniqueName, _efTemplate);
 
             bool isCreated = false;

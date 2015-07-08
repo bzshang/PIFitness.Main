@@ -93,7 +93,7 @@ namespace PIFitness.Common
 
             if (listEF.Count > 0)
             {
-                PIFitnessLog.Write(TraceEventType.Information, 0, string.Format("Event frame already exists: {0}", name));
+                PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Event frame already exists: {0}", name));
                 return true;
             }
             else
