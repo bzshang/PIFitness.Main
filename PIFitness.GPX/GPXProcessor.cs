@@ -51,13 +51,21 @@ namespace PIFitness.GPX
 
         public void Process()
         {
-            var table = GetTable();
-            if (table == null)
+            IQueryable<GPXEntry> table = null;
+            try
             {
-                PIFitnessLog.Write(TraceEventType.Warning, 0, "GPX table was null");
-                return;
+                table = GetTable();
+                if (table == null)
+                {
+                    PIFitnessLog.Write(TraceEventType.Warning, 0, "GPX table was null");
+                    return;
+                }
             }
-
+            catch (Exception ex)
+            {
+                PIFitnessLog.Write(TraceEventType.Error, 0, ex);
+            }
+            
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
