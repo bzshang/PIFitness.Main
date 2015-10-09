@@ -8,6 +8,8 @@ using OSIsoft.AF.Asset;
 
 using PIFitness.Entities;
 using PIFitness.Common.Interfaces;
+using PIFitness.Log;
+using System.Diagnostics;
 
 namespace PIFitness.Fitbit
 {
@@ -25,11 +27,19 @@ namespace PIFitness.Fitbit
 
         public IQueryable<UserEntry> Read()
         {
-            IQueryable<UserEntry> userTable = _userRepository.UserTable;
+            try
+            {
+                IQueryable<UserEntry> userTable = _userRepository.UserTable;
 
-            userTable = _filter.FilterTable(userTable);
+                userTable = _filter.FilterTable(userTable);
 
-            return userTable;
+                return userTable;
+            }
+            catch (Exception ex)
+            {
+                PIFitnessLog.Write(TraceEventType.Error, 0, string.Format("Error in FitbitTableReader.Read(): {0}", ex.Message));
+                return null;
+            }
         }
 
 
