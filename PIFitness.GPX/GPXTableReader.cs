@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 using OSIsoft.AF.Asset;
 
+using PIFitness.Log;
 using PIFitness.Entities;
 using PIFitness.Common.Interfaces;
+
 
 namespace PIFitness.GPX
 {
@@ -25,11 +28,19 @@ namespace PIFitness.GPX
 
         public IQueryable<GPXEntry> Read()
         {
-            IQueryable<GPXEntry> gpxTable = _gpxRepository.GpxTable;
+            try
+            {
+                IQueryable<GPXEntry> gpxTable = _gpxRepository.GpxTable;
 
-            gpxTable = _filter.FilterTable(gpxTable);
+                gpxTable = _filter.FilterTable(gpxTable);
 
-            return gpxTable;
+                return gpxTable;
+            }
+            catch (Exception ex)
+            {
+                PIFitnessLog.Write(TraceEventType.Error, 0, string.Format("Error in GPXTableReader.Read(): {0}", ex.Message));
+                return null;
+            }
         }
 
 
