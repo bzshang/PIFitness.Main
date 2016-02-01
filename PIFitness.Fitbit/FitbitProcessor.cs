@@ -100,6 +100,8 @@ namespace PIFitness.Fitbit
 
                     IList<AFValues> valsList = GetFitbitData(fitbitUser);
 
+                    PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Retrieved Fitbit data for {0}", fitbitUser.UserElement.Name));
+
                     _afAccess.UpdateValues(valsList);
 
                     ////System.IO.File.WriteAllText(@"pifitness_vals.txt", fitbitUser.UserElement.Name);
@@ -166,6 +168,8 @@ namespace PIFitness.Fitbit
         {
 
             TimeSeriesDataList internalDataList = fitbitUser.ApiClient.GetTimeSeries(stream.FitbitSource, startTime, endTime);
+
+            PIFitnessLog.Write(TraceEventType.Verbose, 0, string.Format("Returned data. Stream: {0}, User: {1}", stream.FitbitSource, fitbitUser.UserElement.Name));
 
             AFValues vals = _fitbitConverter.ConvertToAFValues(internalDataList, stream, fitbitUser);
 

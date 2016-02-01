@@ -62,6 +62,9 @@ namespace PIFitness.UserSync
 
         private IQueryable<UserEntry> GetTable()
         {
+            PIFitnessLog.Write(TraceEventType.Verbose, 0, "Entering UserSyncProcessor.GetTable");
+
+
             IQueryable<UserEntry> result = _reader.Read();
             return result;
         }

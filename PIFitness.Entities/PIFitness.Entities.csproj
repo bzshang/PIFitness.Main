@@ -67,6 +67,10 @@
       <Project>{8311ab75-6203-4bb7-a3d1-cef092285323}</Project>
       <Name>PIFitness.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIFitness.Log\PIFitness.Log.csproj">
+      <Project>{61a88c21-a03b-4c5d-8aa0-2f4d59703ec7}</Project>
+      <Name>PIFitness.Log</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

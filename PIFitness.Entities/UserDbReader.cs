@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using PIFitness.Common;
 using PIFitness.Common.Interfaces;
+using PIFitness.Log;
+using System.Diagnostics;
 
 namespace PIFitness.Entities
 {
@@ -23,13 +25,19 @@ namespace PIFitness.Entities
 
         public IQueryable<UserEntry> Read()
         {
-            IQueryable<UserEntry> gpxTable = _userRepository.UserTable;
+            try
+            {
+                IQueryable<UserEntry> userTable = _userRepository.UserTable;
 
-            gpxTable = _filter.FilterTable(gpxTable);
+                userTable = _filter.FilterTable(userTable);
 
-            return gpxTable;
+                return userTable;
+            }
+            catch (Exception ex)
+            {
+                PIFitnessLog.Write(TraceEventType.Error, 0, string.Format("Error in UserDbReader.Read(): {0}", ex.Message));
+                return null;
+            }
         }
-
-
     }
 }
